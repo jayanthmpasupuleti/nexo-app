@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { getTagUrl } from '@/lib/utils/tag-codes'
 import TagEditor from '@/components/dashboard/TagEditor'
 import TagUrlSection from '@/components/dashboard/TagUrlSection'
+import NFCWriter from '@/components/dashboard/NFCWriter'
 import type { TagWithData } from '@/lib/types/database'
 
 
@@ -64,6 +65,11 @@ export default async function TagEditorPage({ params }: TagEditorPageProps) {
 
                 {/* Tag URL */}
                 <TagUrlSection tagUrl={tagUrl} tagCode={tag.code} />
+            </div>
+
+            {/* NFC Writer */}
+            <div className="mb-6">
+                <NFCWriter tagUrl={tagUrl} />
             </div>
 
             {/* Mode Editor */}
