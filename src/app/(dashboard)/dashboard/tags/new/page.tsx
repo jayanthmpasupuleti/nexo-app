@@ -102,18 +102,18 @@ export default function NewTagPage() {
 
     return (
         <div className="max-w-2xl mx-auto">
-            <div className="mb-8">
-                <Link href="/dashboard" className="text-purple-600 hover:text-purple-700 text-sm">
+            <div className="mb-6">
+                <Link href="/dashboard" className="text-stone-500 hover:text-stone-700 text-sm transition-colors">
                     ← Back to Dashboard
                 </Link>
             </div>
 
-            <div className="bg-white rounded-xl border border-gray-200 p-8">
-                <h1 className="text-2xl font-bold text-gray-900 mb-2">Create New Tag</h1>
-                <p className="text-gray-500 mb-8">Choose a mode for your NFC tag</p>
+            <div className="bg-white rounded-xl border border-stone-200 p-6">
+                <h1 className="text-xl font-semibold text-stone-900 mb-1">Create New Tag</h1>
+                <p className="text-stone-500 text-sm mb-6">Choose a mode for your NFC tag</p>
 
                 {error && (
-                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
                         {error}
                     </div>
                 )}
@@ -121,7 +121,7 @@ export default function NewTagPage() {
                 <form onSubmit={handleCreate}>
                     {/* Tag Label */}
                     <div className="mb-6">
-                        <label htmlFor="label" className="block text-gray-700 font-medium mb-2">
+                        <label htmlFor="label" className="block text-stone-600 text-sm mb-2">
                             Tag Name
                         </label>
                         <input
@@ -130,22 +130,22 @@ export default function NewTagPage() {
                             value={label}
                             onChange={(e) => setLabel(e.target.value)}
                             placeholder="e.g., Office Keychain, Wallet Card"
-                            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                            className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent text-stone-900 placeholder:text-stone-400"
                         />
                     </div>
 
                     {/* Mode Selection */}
-                    <div className="mb-8">
-                        <label className="block text-gray-700 font-medium mb-4">
+                    <div className="mb-6">
+                        <label className="block text-stone-600 text-sm mb-3">
                             Select Mode
                         </label>
-                        <div className="space-y-3">
+                        <div className="space-y-2">
                             {modes.map((mode) => (
                                 <label
                                     key={mode.value}
-                                    className={`block p-4 border-2 rounded-xl cursor-pointer transition-all ${selectedMode === mode.value
-                                        ? 'border-purple-500 bg-purple-50'
-                                        : 'border-gray-200 hover:border-gray-300'
+                                    className={`block p-4 border rounded-lg cursor-pointer transition-all ${selectedMode === mode.value
+                                        ? 'border-stone-900 bg-stone-50'
+                                        : 'border-stone-200 hover:border-stone-300'
                                         }`}
                                 >
                                     <input
@@ -157,10 +157,10 @@ export default function NewTagPage() {
                                         className="sr-only"
                                     />
                                     <div className="flex items-center gap-4">
-                                        <span className="text-3xl">{mode.icon}</span>
+                                        <span className="text-2xl">{mode.icon}</span>
                                         <div>
-                                            <p className="font-semibold text-gray-900">{mode.label}</p>
-                                            <p className="text-gray-500 text-sm">{mode.description}</p>
+                                            <p className="font-medium text-stone-900">{mode.label}</p>
+                                            <p className="text-stone-500 text-sm">{mode.description}</p>
                                         </div>
                                     </div>
                                 </label>
@@ -171,7 +171,7 @@ export default function NewTagPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full py-4 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? 'Creating...' : 'Create Tag'}
                     </button>

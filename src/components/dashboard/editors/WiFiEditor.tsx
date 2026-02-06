@@ -19,6 +19,7 @@ export default function WiFiEditor({ tagId, data }: WiFiEditorProps) {
         hidden: data?.hidden || false,
     })
     const [saving, setSaving] = useState(false)
+    const [saved, setSaved] = useState(false)
     const router = useRouter()
     const supabase = createClient()
 
@@ -28,6 +29,7 @@ export default function WiFiEditor({ tagId, data }: WiFiEditorProps) {
             ...prev,
             [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
         }))
+        setSaved(false)
     }
 
     const handleSave = async () => {
@@ -43,13 +45,14 @@ export default function WiFiEditor({ tagId, data }: WiFiEditorProps) {
         }
 
         setSaving(false)
+        setSaved(true)
         router.refresh()
     }
 
     return (
         <div className="space-y-4">
             <div>
-                <label className="block text-gray-700 text-sm font-medium mb-2">
+                <label className="block text-stone-600 text-sm mb-2">
                     Network Name (SSID) <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -58,12 +61,13 @@ export default function WiFiEditor({ tagId, data }: WiFiEditorProps) {
                     value={formData.ssid}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900"
+                    placeholder="My WiFi Network"
                 />
             </div>
 
             <div>
-                <label className="block text-gray-700 text-sm font-medium mb-2">
+                <label className="block text-stone-600 text-sm mb-2">
                     Password <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -72,18 +76,18 @@ export default function WiFiEditor({ tagId, data }: WiFiEditorProps) {
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900"
                 />
-                <p className="text-gray-500 text-xs mt-1">This will be visible to anyone who scans your tag</p>
+                <p className="text-stone-400 text-xs mt-1">This will be visible to anyone who scans your tag</p>
             </div>
 
             <div>
-                <label className="block text-gray-700 text-sm font-medium mb-2">Security Type</label>
+                <label className="block text-stone-600 text-sm mb-2">Security Type</label>
                 <select
                     name="security"
                     value={formData.security}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900"
                 >
                     <option value="WPA">WPA</option>
                     <option value="WPA2">WPA2</option>
@@ -93,16 +97,16 @@ export default function WiFiEditor({ tagId, data }: WiFiEditorProps) {
                 </select>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 py-2">
                 <input
                     type="checkbox"
                     id="hidden"
                     name="hidden"
                     checked={formData.hidden}
                     onChange={handleChange}
-                    className="w-5 h-5 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                    className="w-4 h-4 rounded border-stone-300 text-stone-900 focus:ring-stone-900"
                 />
-                <label htmlFor="hidden" className="text-gray-700">
+                <label htmlFor="hidden" className="text-stone-600 text-sm">
                     Hidden network
                 </label>
             </div>
@@ -110,9 +114,9 @@ export default function WiFiEditor({ tagId, data }: WiFiEditorProps) {
             <button
                 onClick={handleSave}
                 disabled={saving}
-                className="w-full py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 disabled:opacity-50"
+                className="w-full py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 disabled:opacity-50 transition-colors"
             >
-                {saving ? 'Saving...' : 'Save Wi-Fi Settings'}
+                {saving ? 'Saving...' : saved ? '✓ Saved' : 'Save Wi-Fi Settings'}
             </button>
         </div>
     )

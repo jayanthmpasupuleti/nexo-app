@@ -23,25 +23,25 @@ export default async function DashboardLayout({
         .single() as { data: Profile | null }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-stone-50">
             {/* Navigation */}
-            <nav className="bg-white border-b border-gray-200">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
+            <nav className="bg-white border-b border-stone-200">
+                <div className="max-w-5xl mx-auto px-6">
+                    <div className="flex justify-between h-14">
                         <div className="flex items-center">
-                            <Link href="/dashboard" className="text-xl font-bold text-gray-900">
+                            <Link href="/dashboard" className="text-xl font-semibold text-stone-900">
                                 Nexo
                             </Link>
                         </div>
 
                         <div className="flex items-center gap-4">
-                            <span className="text-gray-600 text-sm">
+                            <span className="text-stone-500 text-sm">
                                 {profile?.full_name || user.email}
                             </span>
                             <form action="/api/auth/signout" method="post">
                                 <button
                                     type="submit"
-                                    className="text-gray-500 hover:text-gray-700 text-sm"
+                                    className="text-stone-400 hover:text-stone-600 text-sm transition-colors"
                                 >
                                     Sign out
                                 </button>
@@ -52,7 +52,7 @@ export default async function DashboardLayout({
             </nav>
 
             {/* Main Content */}
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <main className="max-w-5xl mx-auto px-6 py-8">
                 {children}
             </main>
         </div>

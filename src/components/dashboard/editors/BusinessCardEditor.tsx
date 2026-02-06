@@ -23,11 +23,13 @@ export default function BusinessCardEditor({ tagId, data }: BusinessCardEditorPr
         bio: data?.bio || '',
     })
     const [saving, setSaving] = useState(false)
+    const [saved, setSaved] = useState(false)
     const router = useRouter()
     const supabase = createClient()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+        setSaved(false)
     }
 
     const handleSave = async () => {
@@ -43,6 +45,7 @@ export default function BusinessCardEditor({ tagId, data }: BusinessCardEditorPr
         }
 
         setSaving(false)
+        setSaved(true)
         router.refresh()
     }
 
@@ -59,13 +62,13 @@ export default function BusinessCardEditor({ tagId, data }: BusinessCardEditorPr
             </div>
 
             <div>
-                <label className="block text-gray-700 text-sm font-medium mb-2">Bio</label>
+                <label className="block text-stone-600 text-sm mb-2">Bio</label>
                 <textarea
                     name="bio"
                     value={formData.bio}
                     onChange={handleChange}
                     rows={3}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900 placeholder:text-stone-400"
                     placeholder="A brief description about yourself..."
                 />
             </div>
@@ -73,9 +76,9 @@ export default function BusinessCardEditor({ tagId, data }: BusinessCardEditorPr
             <button
                 onClick={handleSave}
                 disabled={saving}
-                className="w-full py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 disabled:opacity-50"
+                className="w-full py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 disabled:opacity-50 transition-colors"
             >
-                {saving ? 'Saving...' : 'Save Business Card'}
+                {saving ? 'Saving...' : saved ? '✓ Saved' : 'Save Business Card'}
             </button>
         </div>
     )
@@ -92,7 +95,7 @@ function InputField({ label, name, value, onChange, type = 'text', required = fa
 }) {
     return (
         <div>
-            <label className="block text-gray-700 text-sm font-medium mb-2">
+            <label className="block text-stone-600 text-sm mb-2">
                 {label} {required && <span className="text-red-500">*</span>}
             </label>
             <input
@@ -102,7 +105,7 @@ function InputField({ label, name, value, onChange, type = 'text', required = fa
                 onChange={onChange}
                 required={required}
                 placeholder={placeholder}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900 placeholder:text-stone-400"
             />
         </div>
     )
