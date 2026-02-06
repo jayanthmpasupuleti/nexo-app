@@ -1,0 +1,168 @@
+'use client'
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import { useRouter } from 'next/navigation'
+import type { TagWithData, TagMode } from '@/lib/types/database'
+import BusinessCardEditor from './editors/BusinessCardEditor'
+import WiFiEditor from './editors/WiFiEditor'
+import LinkHubEditor from './editors/LinkHubEditor'
+import EmergencyEditor from './editors/EmergencyEditor'
+import RedirectEditor from './editors/RedirectEditor'
+
+interface TagEditorProps {
+    tag: TagWithData
+}
+
+const modes: { value: TagMode; label: string; icon: string }[] = [
+    { value: 'business_card', label: 'Business Card', icon: '💼' },
+    { value: 'wifi', label: 'Wi-Fi', icon: '📶' },
+    { value: 'link_hub', label: 'Link Hub', icon: '🔗' },
+    { value: 'emergency', label: 'Emergency', icon: '🏥' },
+    { value: 'redirect', label: 'Redirect', icon: '↗️' },
+]
+
+export default function TagEditor({ tag }: TagEditorProps) {
+    const [activeMode, setActiveMode] = useState<TagMode>(tag.active_mode)
+    const [label, setLabel] = useState(tag.label || '')
+    const [isActive, setIsActive] = useState(tag.is_active)
+    const [saving, setSaving] = useState(false)
+    const router = useRouter()
+    const supabase = createClient()
+
+    const handleSaveTag = async () => {
+        setSaving(true)
+
+        await (supabase.from('tags') as any)
+            .update({
+                label,
+                active_mode: activeMode,
+                is_active: isActive,
+            })
+            .eq('id', tag.id)
+
+        setSaving(false)
+        router.refresh()
+    }
+
+    const handleDelete = async () => {
+        if (!confirm('Are you sure you want to delete this tag? This action cannot be undone.')) {
+            return
+        }
+
+        await (supabase.from('tags') as any).delete().eq('id', tag.id)
+        router.push('/dashboard')
+        router.refresh()
+    }
+
+    const renderModeEditor = () => {
+        switch (activeMode) {
+            case 'business_card':
+                return <BusinessCardEditor tagId={tag.id} data={tag.business_cards} />
+            case 'wifi':
+                return <WiFiEditor tagId={tag.id} data={tag.wifi_configs} />
+            case 'link_hub':
+                return <LinkHubEditor tagId={tag.id} data={tag.link_hubs} />
+            case 'emergency':
+                return <EmergencyEditor tagId={tag.id} data={tag.emergency_infos} />
+            case 'redirect':
+                return <RedirectEditor tagId={tag.id} data={tag.custom_redirects} />
+            default:
+                return null
+        }
+    }
+
+    return (
+        <div className="space-y-6">
+            {/* Tag Settings */}
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">Tag Settings</h2>
+
+                <div className="space-y-4">
+                    <div>
+                        <label htmlFor="label" className="block text-gray-700 text-sm font-medium mb-2">
+                            Tag Name
+                        </label>
+                        <input
+                            id="label"
+                            type="text"
+                            value={label}
+                            onChange={(e) => setLabel(e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        />
+                    </div>
+
+                    <div className="flex items-center justify-between py-3">
+                        <div>
+                            <p className="font-medium text-gray-900">Active</p>
+                            <p className="text-gray-500 text-sm">When disabled, the tag won&apos;t load for visitors</p>
+                        </div>
+                        <button
+                            onClick={() => setIsActive(!isActive)}
+                            className={`relative w-12 h-6 rounded-full transition-colors ${isActive ? 'bg-green-500' : 'bg-gray-300'
+                                }`}
+                        >
+                            <span
+                                className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${isActive ? 'translate-x-6' : ''
+                                    }`}
+                            />
+                        </button>
+                    </div>
+
+                    {/* Mode Selector */}
+                    <div>
+                        <label className="block text-gray-700 text-sm font-medium mb-2">
+                            Active Mode
+                        </label>
+                        <div className="flex flex-wrap gap-2">
+                            {modes.map((mode) => (
+                                <button
+                                    key={mode.value}
+                                    onClick={() => setActiveMode(mode.value)}
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${activeMode === mode.value
+                                        ? 'bg-purple-100 text-purple-700 border-2 border-purple-500'
+                                        : 'bg-gray-100 text-gray-700 border-2 border-transparent hover:bg-gray-200'
+                                        }`}
+                                >
+                                    <span className="mr-2">{mode.icon}</span>
+                                    {mode.label}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    <button
+                        onClick={handleSaveTag}
+                        disabled={saving}
+                        className="w-full py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 disabled:opacity-50 transition-colors"
+                    >
+                        {saving ? 'Saving...' : 'Save Tag Settings'}
+                    </button>
+                </div>
+            </div>
+
+            {/* Mode Editor */}
+            <div className="bg-white rounded-xl border border-gray-200 p-6">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                    {modes.find(m => m.value === activeMode)?.icon} {modes.find(m => m.value === activeMode)?.label} Settings
+                </h2>
+                {renderModeEditor()}
+            </div>
+
+            {/* Danger Zone */}
+            <div className="bg-red-50 rounded-xl border border-red-200 p-6">
+                <h2 className="text-lg font-semibold text-red-900 mb-2">Danger Zone</h2>
+                <p className="text-red-700 text-sm mb-4">
+                    Once you delete a tag, there is no going back.
+                </p>
+                <button
+                    onClick={handleDelete}
+                    className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors"
+                >
+                    Delete Tag
+                </button>
+            </div>
+        </div>
+    )
+}
