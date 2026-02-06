@@ -3,7 +3,9 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getTagUrl } from '@/lib/utils/tag-codes'
 import TagEditor from '@/components/dashboard/TagEditor'
+import TagUrlSection from '@/components/dashboard/TagUrlSection'
 import type { TagWithData } from '@/lib/types/database'
+
 
 interface TagEditorPageProps {
     params: Promise<{ tagId: string }>
@@ -61,20 +63,7 @@ export default async function TagEditorPage({ params }: TagEditorPageProps) {
                 </div>
 
                 {/* Tag URL */}
-                <div className="bg-stone-50 rounded-lg p-4 flex items-center justify-between">
-                    <div>
-                        <p className="text-stone-400 text-xs mb-1">Tag URL</p>
-                        <p className="font-mono text-stone-900 text-sm">{tagUrl}</p>
-                    </div>
-                    <a
-                        href={tagUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-4 py-2 bg-stone-900 text-white rounded-lg text-sm font-medium hover:bg-stone-800 transition-colors"
-                    >
-                        Preview
-                    </a>
-                </div>
+                <TagUrlSection tagUrl={tagUrl} tagCode={tag.code} />
             </div>
 
             {/* Mode Editor */}

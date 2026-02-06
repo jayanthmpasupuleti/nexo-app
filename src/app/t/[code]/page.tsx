@@ -79,13 +79,15 @@ export default async function TagPage({ params }: TagPageProps) {
 
 function EmptyModeMessage({ mode }: { mode: string }) {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-            <div className="text-center">
-                <div className="text-6xl mb-4">🔧</div>
-                <h1 className="text-xl font-semibold text-gray-900 mb-2">
+        <div className="min-h-screen flex items-center justify-center bg-stone-50 p-6">
+            <div className="text-center max-w-sm">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-stone-100 flex items-center justify-center">
+                    <span className="text-2xl">🔧</span>
+                </div>
+                <h1 className="text-lg font-semibold text-stone-900 mb-2">
                     {mode} Not Configured
                 </h1>
-                <p className="text-gray-600">
+                <p className="text-stone-500 text-sm">
                     The owner hasn&apos;t set up this mode yet.
                 </p>
             </div>

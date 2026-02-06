@@ -31,6 +31,9 @@ export default function TagEditor({ tag }: TagEditorProps) {
     const router = useRouter()
     const supabase = createClient()
 
+    const [deleting, setDeleting] = useState(false)
+    const [confirmDelete, setConfirmDelete] = useState(false)
+
     const handleSaveTag = async () => {
         setSaving(true)
 
@@ -47,14 +50,29 @@ export default function TagEditor({ tag }: TagEditorProps) {
     }
 
     const handleDelete = async () => {
-        if (!confirm('Are you sure you want to delete this tag? This action cannot be undone.')) {
+        if (!confirmDelete) {
+            setConfirmDelete(true)
             return
         }
 
-        await (supabase.from('tags') as any).delete().eq('id', tag.id)
+        setDeleting(true)
+
+        const { error } = await (supabase.from('tags') as any)
+            .delete()
+            .eq('id', tag.id)
+
+        if (error) {
+            console.error('Delete error:', error)
+            alert('Failed to delete tag: ' + error.message)
+            setDeleting(false)
+            setConfirmDelete(false)
+            return
+        }
+
         router.push('/dashboard')
         router.refresh()
     }
+
 
     const renderModeEditor = () => {
         switch (activeMode) {
@@ -157,13 +175,35 @@ export default function TagEditor({ tag }: TagEditorProps) {
                 <p className="text-red-600 text-sm mb-4">
                     Once you delete a tag, there is no going back.
                 </p>
-                <button
-                    onClick={handleDelete}
-                    className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors"
-                >
-                    Delete Tag
-                </button>
+                <div className="flex gap-2">
+                    {confirmDelete ? (
+                        <>
+                            <button
+                                onClick={handleDelete}
+                                disabled={deleting}
+                                className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 disabled:opacity-50 transition-colors"
+                            >
+                                {deleting ? 'Deleting...' : 'Yes, Delete Forever'}
+                            </button>
+                            <button
+                                onClick={() => setConfirmDelete(false)}
+                                disabled={deleting}
+                                className="px-4 py-2 bg-stone-200 text-stone-700 rounded-lg text-sm font-medium hover:bg-stone-300 disabled:opacity-50 transition-colors"
+                            >
+                                Cancel
+                            </button>
+                        </>
+                    ) : (
+                        <button
+                            onClick={handleDelete}
+                            className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors"
+                        >
+                            Delete Tag
+                        </button>
+                    )}
+                </div>
             </div>
+
         </div>
     )
 }
