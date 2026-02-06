@@ -2,146 +2,166 @@ import Link from 'next/link'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="container mx-auto px-6 py-6">
-        <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold text-white">Nexo</div>
-          <div className="flex items-center gap-4">
-            <Link
-              href="/login"
-              className="text-white/70 hover:text-white transition-colors"
-            >
-              Login
-            </Link>
-            <Link
-              href="/signup"
-              className="px-4 py-2 bg-white text-slate-900 rounded-lg font-medium hover:bg-white/90 transition-colors"
-            >
-              Get Started
-            </Link>
+      <nav className="border-b border-stone-200">
+        <div className="max-w-5xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="text-xl font-semibold text-stone-900">Nexo</div>
+            <div className="flex items-center gap-6">
+              <Link
+                href="/login"
+                className="text-stone-600 hover:text-stone-900 transition-colors text-sm"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/signup"
+                className="px-4 py-2 bg-stone-900 text-white rounded-lg text-sm font-medium hover:bg-stone-800 transition-colors"
+              >
+                Get started
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-6 py-20 text-center">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-            Your Digital Identity,
+      <section className="py-24">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-stone-100 rounded-full text-stone-600 text-sm mb-6">
+            <span>✨</span>
+            <span>NFC-powered digital identity</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-semibold text-stone-900 mb-6 leading-tight tracking-tight">
+            Share your digital identity
             <br />
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              One Tap Away
-            </span>
+            <span className="text-stone-400">with a single tap</span>
           </h1>
-          <p className="text-xl text-white/60 mb-10 max-w-xl mx-auto">
-            Transform any NFC tag into a powerful digital hub. Share contacts, Wi-Fi, links, and more with a single tap.
+          <p className="text-lg text-stone-500 mb-10 max-w-xl mx-auto leading-relaxed">
+            Transform any NFC tag into a powerful hub for contacts, Wi-Fi credentials, links, and more. No app required.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/signup"
-              className="px-8 py-4 bg-white text-slate-900 rounded-xl font-semibold hover:bg-white/90 transition-all hover:scale-105"
+              className="px-6 py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 transition-colors"
             >
-              Start Free
+              Start for free
             </Link>
             <Link
               href="#features"
-              className="px-8 py-4 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-colors"
+              className="px-6 py-3 text-stone-600 hover:text-stone-900 transition-colors font-medium"
             >
-              See How It Works
+              Learn more →
             </Link>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="container mx-auto px-6 py-20">
-        <h2 className="text-3xl font-bold text-white text-center mb-16">
-          One Tag, Unlimited Possibilities
-        </h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <FeatureCard
-            icon="💼"
-            title="Business Card"
-            description="Share your contact details instantly. Recipients can save your info with one tap."
-          />
-          <FeatureCard
-            icon="📶"
-            title="Wi-Fi Sharing"
-            description="Let guests connect to your network without typing passwords. Just tap and connect."
-          />
-          <FeatureCard
-            icon="🔗"
-            title="Link Hub"
-            description="Your personal Linktree. All your important links in one beautiful page."
-          />
-          <FeatureCard
-            icon="🏥"
-            title="Emergency Info"
-            description="Life-saving medical information accessible when it matters most."
-          />
-          <FeatureCard
-            icon="↗️"
-            title="Custom Redirects"
-            description="Send visitors anywhere. Perfect for marketing campaigns and promotions."
-          />
-          <FeatureCard
-            icon="🔄"
-            title="Switch Anytime"
-            description="Change what your tag does whenever you want. No reprinting, no new hardware."
-          />
+      <section id="features" className="py-20 border-t border-stone-100">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-2xl font-semibold text-stone-900 mb-3">
+              One tag, endless possibilities
+            </h2>
+            <p className="text-stone-500">
+              Configure your NFC tag to work exactly how you need it.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <FeatureCard
+              icon="💼"
+              title="Business Card"
+              description="Share contact details instantly. Save to phone with one tap."
+            />
+            <FeatureCard
+              icon="📶"
+              title="Wi-Fi Sharing"
+              description="Connect guests to your network. No password typing needed."
+            />
+            <FeatureCard
+              icon="🔗"
+              title="Link Hub"
+              description="All your links in one place. Like Linktree, but on a tag."
+            />
+            <FeatureCard
+              icon="🏥"
+              title="Emergency Info"
+              description="Medical info accessible in emergencies. Could save a life."
+            />
+            <FeatureCard
+              icon="↗️"
+              title="Redirect"
+              description="Send visitors to any URL. Perfect for marketing."
+            />
+            <FeatureCard
+              icon="🔄"
+              title="Switch Modes"
+              description="Change what your tag does anytime. No new hardware."
+            />
+          </div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="container mx-auto px-6 py-20">
-        <h2 className="text-3xl font-bold text-white text-center mb-16">
-          Simple as 1-2-3
-        </h2>
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          <StepCard
-            number="1"
-            title="Get Your Tag"
-            description="Order an NFC keychain or use any NFC-enabled tag you already have."
-          />
-          <StepCard
-            number="2"
-            title="Configure"
-            description="Choose your mode and customize your content through our dashboard."
-          />
-          <StepCard
-            number="3"
-            title="Tap & Share"
-            description="Hold your tag near any smartphone. It works automatically."
-          />
+      <section className="py-20 bg-stone-50">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-2xl font-semibold text-stone-900 mb-3">
+              How it works
+            </h2>
+            <p className="text-stone-500">
+              Get started in under 5 minutes.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-12">
+            <StepCard
+              number="1"
+              title="Get a tag"
+              description="Use any NFC tag or keychain. We also sell premium ones."
+            />
+            <StepCard
+              number="2"
+              title="Configure"
+              description="Choose a mode and customize your content in our dashboard."
+            />
+            <StepCard
+              number="3"
+              title="Share"
+              description="Hold near any smartphone. It just works, no app needed."
+            />
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="container mx-auto px-6 py-20">
-        <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-3xl p-12 text-center max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Ready to Go Digital?
+      <section className="py-20">
+        <div className="max-w-2xl mx-auto px-6 text-center">
+          <h2 className="text-2xl font-semibold text-stone-900 mb-3">
+            Ready to go digital?
           </h2>
-          <p className="text-white/80 mb-8 text-lg">
-            Join thousands who&apos;ve already upgraded their networking game.
+          <p className="text-stone-500 mb-8">
+            Join thousands who&apos;ve already upgraded their networking.
           </p>
           <Link
             href="/signup"
-            className="inline-block px-8 py-4 bg-white text-purple-600 rounded-xl font-semibold hover:bg-white/90 transition-all hover:scale-105"
+            className="inline-block px-6 py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 transition-colors"
           >
-            Create Your Free Account
+            Create free account
           </Link>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="container mx-auto px-6 py-12 border-t border-white/10">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-white font-bold text-xl">Nexo</div>
-          <p className="text-white/40 text-sm">
-            © {new Date().getFullYear()} Nexo. All rights reserved.
-          </p>
+      <footer className="border-t border-stone-200">
+        <div className="max-w-5xl mx-auto px-6 py-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="text-stone-900 font-semibold">Nexo</div>
+            <p className="text-stone-400 text-sm">
+              © {new Date().getFullYear()} Nexo. All rights reserved.
+            </p>
+          </div>
         </div>
       </footer>
     </div>
@@ -150,10 +170,10 @@ export default function HomePage() {
 
 function FeatureCard({ icon, title, description }: { icon: string; title: string; description: string }) {
   return (
-    <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 hover:bg-white/10 transition-colors">
-      <div className="text-4xl mb-4">{icon}</div>
-      <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
-      <p className="text-white/60">{description}</p>
+    <div className="bg-white rounded-xl border border-stone-200 p-6 hover:border-stone-300 hover:shadow-sm transition-all">
+      <div className="text-2xl mb-3">{icon}</div>
+      <h3 className="font-medium text-stone-900 mb-1">{title}</h3>
+      <p className="text-stone-500 text-sm leading-relaxed">{description}</p>
     </div>
   )
 }
@@ -161,11 +181,11 @@ function FeatureCard({ icon, title, description }: { icon: string; title: string
 function StepCard({ number, title, description }: { number: string; title: string; description: string }) {
   return (
     <div className="text-center">
-      <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+      <div className="w-10 h-10 bg-stone-900 text-white rounded-full flex items-center justify-center font-medium mx-auto mb-4">
         {number}
       </div>
-      <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
-      <p className="text-white/60">{description}</p>
+      <h3 className="font-medium text-stone-900 mb-2">{title}</h3>
+      <p className="text-stone-500 text-sm leading-relaxed">{description}</p>
     </div>
   )
 }

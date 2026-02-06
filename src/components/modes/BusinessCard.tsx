@@ -8,7 +8,7 @@ interface BusinessCardProps {
 }
 
 export default function BusinessCardMode({ data }: BusinessCardProps) {
-    const [copied, setCopied] = useState(false)
+    const [copied, setCopied] = useState<string | null>(null)
 
     const generateVCard = () => {
         const vcard = `BEGIN:VCARD
@@ -35,93 +35,113 @@ END:VCARD`
         URL.revokeObjectURL(url)
     }
 
-    const handleCopyEmail = async () => {
-        if (data.email) {
-            await navigator.clipboard.writeText(data.email)
-            setCopied(true)
-            setTimeout(() => setCopied(false), 2000)
-        }
+    const handleCopy = async (text: string, label: string) => {
+        await navigator.clipboard.writeText(text)
+        setCopied(label)
+        setTimeout(() => setCopied(null), 2000)
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-            {/* Animated background glow */}
-            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" />
-            <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
-
-            {/* Content */}
-            <div className="relative z-10 max-w-md mx-auto px-6 py-12 flex flex-col items-center">
-                {/* Profile Photo */}
-                <div className="relative mb-6">
-                    <div className="w-32 h-32 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 p-1">
-                        <div className="w-full h-full rounded-full bg-slate-800 flex items-center justify-center text-5xl">
-                            {data.name ? data.name.charAt(0).toUpperCase() : '👤'}
-                        </div>
+        <div className="min-h-screen bg-stone-50">
+            <div className="max-w-lg mx-auto px-6 py-12">
+                {/* Header */}
+                <div className="text-center mb-10">
+                    {/* Avatar */}
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-stone-200 flex items-center justify-center text-2xl font-medium text-stone-600">
+                        {data.name ? data.name.charAt(0).toUpperCase() : '?'}
                     </div>
-                    {/* Glow ring */}
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-400/50 to-pink-400/50 blur-xl -z-10 animate-pulse" />
-                </div>
 
-                {/* Name */}
-                <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-200 to-pink-200 mb-2 text-center">
-                    {data.name || 'Your Name'}
-                </h1>
-
-                {/* Title & Company */}
-                <p className="text-purple-300 text-lg mb-1">{data.title || 'Your Title'}</p>
-                <p className="text-purple-400/70 text-sm mb-8">{data.company || 'Your Company'}</p>
-
-                {/* Contact Icons Row */}
-                <div className="flex gap-4 mb-8">
-                    {data.phone && (
-                        <a href={`tel:${data.phone}`} className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all hover:scale-110">
-                            <span className="text-2xl">📞</span>
-                        </a>
-                    )}
-                    {data.email && (
-                        <button onClick={handleCopyEmail} className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all hover:scale-110 relative">
-                            <span className="text-2xl">✉️</span>
-                            {copied && (
-                                <span className="absolute -bottom-8 text-xs text-green-400">Copied!</span>
-                            )}
-                        </button>
-                    )}
-                    {data.website && (
-                        <a href={data.website} target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all hover:scale-110">
-                            <span className="text-2xl">🌐</span>
-                        </a>
-                    )}
-                    {data.linkedin && (
-                        <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-lg border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all hover:scale-110">
-                            <span className="text-2xl">💼</span>
-                        </a>
-                    )}
+                    {/* Name & Title */}
+                    <h1 className="text-2xl font-semibold text-stone-900 mb-1">
+                        {data.name || 'Your Name'}
+                    </h1>
+                    <p className="text-stone-500">
+                        {data.title}{data.title && data.company && ' · '}{data.company}
+                    </p>
                 </div>
 
                 {/* Bio */}
                 {data.bio && (
-                    <div className="bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 p-6 mb-8 w-full">
-                        <p className="text-white/80 text-center leading-relaxed">
-                            {data.bio}
-                        </p>
-                    </div>
+                    <p className="text-stone-600 text-center mb-10 leading-relaxed">
+                        {data.bio}
+                    </p>
                 )}
+
+                {/* Contact Info */}
+                <div className="bg-white rounded-xl border border-stone-200 divide-y divide-stone-100 mb-6">
+                    {data.email && (
+                        <button
+                            onClick={() => handleCopy(data.email!, 'email')}
+                            className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-stone-50 transition-colors text-left"
+                        >
+                            <div className="flex items-center gap-3">
+                                <span className="text-stone-400">✉️</span>
+                                <span className="text-stone-600">{data.email}</span>
+                            </div>
+                            <span className="text-xs text-stone-400">
+                                {copied === 'email' ? 'Copied!' : 'Copy'}
+                            </span>
+                        </button>
+                    )}
+
+                    {data.phone && (
+                        <a
+                            href={`tel:${data.phone}`}
+                            className="flex items-center justify-between px-4 py-3.5 hover:bg-stone-50 transition-colors"
+                        >
+                            <div className="flex items-center gap-3">
+                                <span className="text-stone-400">📞</span>
+                                <span className="text-stone-600">{data.phone}</span>
+                            </div>
+                            <span className="text-xs text-stone-400">Call</span>
+                        </a>
+                    )}
+
+                    {data.website && (
+                        <a
+                            href={data.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-between px-4 py-3.5 hover:bg-stone-50 transition-colors"
+                        >
+                            <div className="flex items-center gap-3">
+                                <span className="text-stone-400">🌐</span>
+                                <span className="text-stone-600 truncate max-w-[200px]">
+                                    {data.website.replace(/^https?:\/\//, '')}
+                                </span>
+                            </div>
+                            <span className="text-xs text-stone-400">Open</span>
+                        </a>
+                    )}
+
+                    {data.linkedin && (
+                        <a
+                            href={data.linkedin}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-between px-4 py-3.5 hover:bg-stone-50 transition-colors"
+                        >
+                            <div className="flex items-center gap-3">
+                                <span className="text-stone-400">💼</span>
+                                <span className="text-stone-600">LinkedIn</span>
+                            </div>
+                            <span className="text-xs text-stone-400">Open</span>
+                        </a>
+                    )}
+                </div>
 
                 {/* Save Contact Button */}
                 <button
                     onClick={handleSaveContact}
-                    className="w-full py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-2xl hover:from-purple-600 hover:to-pink-600 transition-all hover:scale-[1.02] shadow-lg shadow-purple-500/25 mb-4"
+                    className="w-full py-3 bg-stone-900 text-white font-medium rounded-lg hover:bg-stone-800 transition-colors"
                 >
-                    💾 Save Contact
+                    Save Contact
                 </button>
 
-                {/* Add to Wallet Button */}
-                <button className="w-full py-4 bg-white/10 backdrop-blur-lg text-white font-semibold rounded-2xl border border-white/20 hover:bg-white/20 transition-all">
-                    📲 Add to Wallet
-                </button>
-
-                {/* Powered by */}
-                <p className="text-white/30 text-xs mt-8">Powered by Nexo</p>
+                {/* Footer */}
+                <p className="text-center text-stone-400 text-xs mt-8">
+                    Powered by Nexo
+                </p>
             </div>
         </div>
     )

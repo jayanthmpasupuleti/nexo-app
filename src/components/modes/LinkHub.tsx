@@ -9,98 +9,73 @@ interface LinkHubProps {
 interface Link {
     title: string
     url: string
-    icon: string
-}
-
-const iconMap: Record<string, string> = {
-    instagram: '📸',
-    youtube: '🎬',
-    twitter: '🐦',
-    linkedin: '💼',
-    github: '💻',
-    website: '🌐',
-    blog: '📝',
-    email: '✉️',
-    tiktok: '🎵',
-    spotify: '🎧',
-    default: '🔗'
-}
-
-function getIcon(title: string, icon?: string): string {
-    if (icon) return icon
-    const lower = title.toLowerCase()
-    for (const [key, value] of Object.entries(iconMap)) {
-        if (lower.includes(key)) return value
-    }
-    return iconMap.default
+    icon?: string
 }
 
 export default function LinkHubMode({ data }: LinkHubProps) {
     const links = (data.links as Link[]) || []
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-900 via-pink-900 to-slate-900 relative overflow-hidden">
-            {/* Subtle pattern overlay */}
-            <div className="absolute inset-0 opacity-5">
-                <div className="absolute inset-0" style={{
-                    backgroundImage: 'radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 1px, transparent 1px)',
-                    backgroundSize: '50px 50px'
-                }} />
-            </div>
-
-            {/* Background glows */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl" />
-
-            {/* Content */}
-            <div className="relative z-10 max-w-md mx-auto px-6 py-12 flex flex-col items-center">
-                {/* Profile Photo */}
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-pink-400 to-purple-400 p-1 mb-4">
-                    <div className="w-full h-full rounded-full bg-slate-800 flex items-center justify-center text-4xl">
-                        {data.title ? data.title.charAt(0).toUpperCase() : '👤'}
+        <div className="min-h-screen bg-stone-50">
+            <div className="max-w-lg mx-auto px-6 py-12">
+                {/* Header */}
+                <div className="text-center mb-10">
+                    {/* Avatar */}
+                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-stone-200 flex items-center justify-center text-2xl font-medium text-stone-600">
+                        {data.title ? data.title.charAt(0).toUpperCase() : '?'}
                     </div>
+
+                    {/* Name */}
+                    <h1 className="text-2xl font-semibold text-stone-900 mb-2">
+                        {data.title || 'Your Name'}
+                    </h1>
+
+                    {/* Bio */}
+                    {data.bio && (
+                        <p className="text-stone-500 max-w-xs mx-auto">
+                            {data.bio}
+                        </p>
+                    )}
                 </div>
 
-                {/* Name */}
-                <h1 className="text-2xl font-bold text-white mb-2 text-center">
-                    {data.title || 'Your Name'}
-                </h1>
-
-                {/* Bio */}
-                <p className="text-pink-300/80 text-center mb-8 max-w-xs">
-                    {data.bio || 'Your bio goes here'}
-                </p>
-
                 {/* Links */}
-                <div className="w-full space-y-3 mb-8">
+                <div className="space-y-3">
                     {links.length > 0 ? links.map((link, index) => (
                         <a
                             key={index}
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group w-full flex items-center gap-4 px-6 py-4 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 hover:bg-white/20 hover:scale-[1.02] transition-all"
+                            className="group flex items-center justify-between w-full px-5 py-4 bg-white rounded-xl border border-stone-200 hover:border-stone-300 hover:shadow-sm transition-all"
                         >
-                            <span className="text-2xl">{getIcon(link.title, link.icon)}</span>
-                            <span className="text-white font-medium flex-1 text-center">
-                                {link.title}
-                            </span>
-                            <span className="text-white/40 group-hover:text-white/60 transition-colors">
-                                →
-                            </span>
+                            <div className="flex items-center gap-3">
+                                {link.icon && (
+                                    <span className="text-lg">{link.icon}</span>
+                                )}
+                                <span className="text-stone-700 font-medium">
+                                    {link.title}
+                                </span>
+                            </div>
+                            <svg
+                                className="w-4 h-4 text-stone-400 group-hover:text-stone-600 transition-colors"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
                         </a>
                     )) : (
-                        <div className="text-center py-8 text-white/40">
+                        <div className="text-center py-12 text-stone-400">
                             <p>No links added yet</p>
                         </div>
                     )}
                 </div>
 
-                {/* Powered by */}
-                <div className="flex items-center gap-2 text-white/30 text-xs">
-                    <span className="text-lg">⚡</span>
-                    <span>Powered by Nexo</span>
-                </div>
+                {/* Footer */}
+                <p className="text-center text-stone-400 text-xs mt-10">
+                    Powered by Nexo
+                </p>
             </div>
         </div>
     )

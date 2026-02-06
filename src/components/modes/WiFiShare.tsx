@@ -27,59 +27,58 @@ export default function WiFiShare({ data }: WiFiShareProps) {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 relative overflow-hidden">
-            {/* Animated wave patterns */}
-            <div className="absolute inset-0 opacity-20">
-                <div className="absolute top-1/3 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent animate-pulse" />
-                <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent animate-pulse delay-500" />
-                <div className="absolute top-2/3 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent animate-pulse delay-1000" />
-            </div>
-
-            {/* Background glow */}
-            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
-
-            {/* Content */}
-            <div className="relative z-10 max-w-md mx-auto px-6 py-12 flex flex-col items-center">
+        <div className="min-h-screen bg-stone-50">
+            <div className="max-w-lg mx-auto px-6 py-12">
                 {/* Header */}
-                <div className="flex items-center gap-2 mb-2">
-                    <span className="text-3xl">📶</span>
-                    <span className="text-white/60 text-sm font-medium tracking-wider uppercase">Nexo Wi-Fi</span>
+                <div className="text-center mb-8">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-stone-100 rounded-full text-stone-500 text-sm mb-4">
+                        <span>📶</span>
+                        <span>Wi-Fi</span>
+                    </div>
+                    <h1 className="text-2xl font-semibold text-stone-900">
+                        {data.ssid || 'Network Name'}
+                    </h1>
+                    <p className="text-stone-500 mt-1">Scan to connect</p>
                 </div>
-
-                {/* Network Name */}
-                <h1 className="text-2xl font-bold text-white mb-2 text-center">
-                    {data.ssid || 'Network Name'}
-                </h1>
-                <p className="text-blue-300 text-sm mb-8">Scan to Connect</p>
 
                 {/* QR Code */}
-                <div className="bg-white rounded-3xl p-4 mb-8 shadow-2xl shadow-blue-500/20">
-                    <img
-                        src={qrCodeUrl}
-                        alt={`WiFi QR code for ${data.ssid}`}
-                        className="w-48 h-48 rounded-2xl"
-                    />
+                <div className="bg-white rounded-xl border border-stone-200 p-6 mb-6">
+                    <div className="flex justify-center mb-6">
+                        <div className="p-4 bg-white border border-stone-100 rounded-lg">
+                            <img
+                                src={qrCodeUrl}
+                                alt={`WiFi QR code for ${data.ssid}`}
+                                className="w-44 h-44"
+                            />
+                        </div>
+                    </div>
+
+                    <p className="text-center text-stone-500 text-sm">
+                        Point your camera at the QR code to connect
+                    </p>
                 </div>
 
-                {/* Network Details Card */}
-                <div className="w-full bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-6 mb-6">
-                    <div className="flex justify-between items-center mb-4 pb-4 border-b border-white/10">
-                        <span className="text-white/60 text-sm">Network</span>
-                        <span className="text-white font-medium">{data.ssid}</span>
+                {/* Network Details */}
+                <div className="bg-white rounded-xl border border-stone-200 divide-y divide-stone-100 mb-6">
+                    <div className="flex items-center justify-between px-4 py-3.5">
+                        <span className="text-stone-500 text-sm">Network</span>
+                        <span className="text-stone-900 font-medium">{data.ssid}</span>
                     </div>
-                    <div className="flex justify-between items-center mb-4 pb-4 border-b border-white/10">
-                        <span className="text-white/60 text-sm">Security</span>
-                        <span className="text-white font-medium">{data.security || 'WPA2'}</span>
+
+                    <div className="flex items-center justify-between px-4 py-3.5">
+                        <span className="text-stone-500 text-sm">Security</span>
+                        <span className="text-stone-900">{data.security || 'WPA2'}</span>
                     </div>
-                    <div className="flex justify-between items-center">
-                        <span className="text-white/60 text-sm">Password</span>
+
+                    <div className="flex items-center justify-between px-4 py-3.5">
+                        <span className="text-stone-500 text-sm">Password</span>
                         <div className="flex items-center gap-2">
-                            <span className="text-white font-mono">
+                            <span className="text-stone-900 font-mono text-sm">
                                 {showPassword ? data.password : '••••••••'}
                             </span>
                             <button
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="text-blue-400 hover:text-blue-300"
+                                className="text-stone-400 hover:text-stone-600 transition-colors"
                             >
                                 {showPassword ? '🙈' : '👁️'}
                             </button>
@@ -90,19 +89,15 @@ export default function WiFiShare({ data }: WiFiShareProps) {
                 {/* Copy Password Button */}
                 <button
                     onClick={handleCopyPassword}
-                    className="w-full py-4 bg-white/10 backdrop-blur-lg text-white font-semibold rounded-2xl border border-white/20 hover:bg-white/20 transition-all mb-4 flex items-center justify-center gap-2"
+                    className="w-full py-3 bg-stone-900 text-white font-medium rounded-lg hover:bg-stone-800 transition-colors"
                 >
-                    <span>📋</span>
-                    <span>{copied ? 'Copied!' : 'Copy Password'}</span>
+                    {copied ? 'Copied!' : 'Copy Password'}
                 </button>
 
-                {/* Connect Automatically Button */}
-                <button className="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-2xl hover:from-blue-600 hover:to-purple-600 transition-all hover:scale-[1.02] shadow-lg shadow-blue-500/25">
-                    ⚡ Connect Automatically
-                </button>
-
-                {/* Powered by */}
-                <p className="text-white/30 text-xs mt-8">Powered by Nexo</p>
+                {/* Footer */}
+                <p className="text-center text-stone-400 text-xs mt-8">
+                    Powered by Nexo
+                </p>
             </div>
         </div>
     )
