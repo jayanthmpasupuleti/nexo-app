@@ -15,6 +15,8 @@ const demoBusinessCard = {
     website: 'https://alexchen.design',
     linkedin: 'https://linkedin.com/in/alexchen',
     bio: 'Passionate about creating user-centered designs that solve real problems. 10+ years of experience in tech.',
+    avatar_url: null,
+    theme: null,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
 }
@@ -35,6 +37,7 @@ const demoLinkHub = {
     tag_id: 'demo',
     title: 'Sarah Martinez',
     bio: 'Content Creator | Travel & Lifestyle ✈️',
+    avatar_url: null,
     links: [
         { title: 'Instagram', url: 'https://instagram.com/sarah', icon: '📸' },
         { title: 'YouTube', url: 'https://youtube.com/sarah', icon: '🎬' },
@@ -42,6 +45,7 @@ const demoLinkHub = {
         { title: 'LinkedIn', url: 'https://linkedin.com/in/sarah', icon: '💼' },
         { title: 'Contact Me', url: 'mailto:sarah@email.com', icon: '✉️' },
     ],
+    theme: null,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
 }
