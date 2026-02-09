@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import type { BusinessCard } from '@/lib/types/database'
 
 interface BusinessCardProps {
@@ -47,9 +48,20 @@ END:VCARD`
                 {/* Header */}
                 <div className="text-center mb-10">
                     {/* Avatar */}
-                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-stone-200 flex items-center justify-center text-2xl font-medium text-stone-600">
-                        {data.name ? data.name.charAt(0).toUpperCase() : '?'}
+                    <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-stone-200 flex items-center justify-center text-2xl font-medium text-stone-600 overflow-hidden relative">
+                        {data.avatar_url ? (
+                            <Image
+                                src={data.avatar_url}
+                                alt={data.name || 'Profile'}
+                                fill
+                                className="object-cover"
+                                sizes="96px"
+                            />
+                        ) : (
+                            <span>{data.name ? data.name.charAt(0).toUpperCase() : '?'}</span>
+                        )}
                     </div>
+
 
                     {/* Name & Title */}
                     <h1 className="text-2xl font-semibold text-stone-900 mb-1">

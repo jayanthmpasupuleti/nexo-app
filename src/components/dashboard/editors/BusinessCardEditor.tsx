@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import type { BusinessCard } from '@/lib/types/database'
+import AvatarUpload from '../AvatarUpload'
 
 interface BusinessCardEditorProps {
     tagId: string
@@ -21,6 +22,7 @@ export default function BusinessCardEditor({ tagId, data }: BusinessCardEditorPr
         website: data?.website || '',
         linkedin: data?.linkedin || '',
         bio: data?.bio || '',
+        avatar_url: data?.avatar_url || null as string | null,
     })
     const [saving, setSaving] = useState(false)
     const [saved, setSaved] = useState(false)
@@ -29,6 +31,11 @@ export default function BusinessCardEditor({ tagId, data }: BusinessCardEditorPr
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
+        setSaved(false)
+    }
+
+    const handleAvatarChange = (url: string | null) => {
+        setFormData(prev => ({ ...prev, avatar_url: url }))
         setSaved(false)
     }
 
@@ -51,6 +58,15 @@ export default function BusinessCardEditor({ tagId, data }: BusinessCardEditorPr
 
     return (
         <div className="space-y-4">
+            {/* Avatar Upload */}
+            <AvatarUpload
+                currentAvatarUrl={formData.avatar_url}
+                tagId={tagId}
+                businessCardId={data?.id || null}
+                name={formData.name}
+                onAvatarChange={handleAvatarChange}
+            />
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <InputField label="Name" name="name" value={formData.name} onChange={handleChange} required />
                 <InputField label="Job Title" name="title" value={formData.title} onChange={handleChange} />
