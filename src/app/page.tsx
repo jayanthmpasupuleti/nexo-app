@@ -2,22 +2,22 @@ import Link from 'next/link'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       {/* Navigation */}
-      <nav className="border-b border-stone-200">
+      <nav className="bg-white border-b-2 border-black">
         <div className="max-w-5xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="text-xl font-semibold text-stone-900">Nexo</div>
-            <div className="flex items-center gap-6">
+            <div className="text-xl font-bold text-black">✨ Nexo</div>
+            <div className="flex items-center gap-4">
               <Link
                 href="/login"
-                className="text-stone-600 hover:text-stone-900 transition-colors text-sm"
+                className="text-black/70 hover:text-black transition-colors font-medium"
               >
                 Log in
               </Link>
               <Link
                 href="/signup"
-                className="px-4 py-2 bg-stone-900 text-white rounded-lg text-sm font-medium hover:bg-stone-800 transition-colors"
+                className="btn-primary text-sm"
               >
                 Get started
               </Link>
@@ -27,45 +27,45 @@ export default function HomePage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-24">
+      <section className="py-24 bg-white">
         <div className="max-w-3xl mx-auto px-6 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-stone-100 rounded-full text-stone-600 text-sm mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--golden-light)] border-2 border-black rounded-full text-black text-sm font-medium mb-8">
             <span>✨</span>
             <span>NFC-powered digital identity</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-semibold text-stone-900 mb-6 leading-tight tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-bold text-black mb-6 leading-tight tracking-tight">
             Share your digital identity
             <br />
-            <span className="text-stone-400">with a single tap</span>
+            <span className="text-[var(--blue)]">with a single tap</span>
           </h1>
-          <p className="text-lg text-stone-500 mb-10 max-w-xl mx-auto leading-relaxed">
+          <p className="text-lg text-black/60 mb-10 max-w-xl mx-auto leading-relaxed">
             Transform any NFC tag into a powerful hub for contacts, Wi-Fi credentials, links, and more. No app required.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/signup"
-              className="px-6 py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 transition-colors"
+              className="btn-primary text-base"
             >
-              Start for free
+              Start for free →
             </Link>
             <Link
               href="#features"
-              className="px-6 py-3 text-stone-600 hover:text-stone-900 transition-colors font-medium"
+              className="btn-secondary text-base"
             >
-              Learn more →
+              Learn more
             </Link>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 border-t border-stone-100">
+      <section id="features" className="py-20 bg-white border-t-2 border-black">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-2xl font-semibold text-stone-900 mb-3">
+            <h2 className="text-2xl font-bold text-black mb-3">
               One tag, endless possibilities
             </h2>
-            <p className="text-stone-500">
+            <p className="text-black/60">
               Configure your NFC tag to work exactly how you need it.
             </p>
           </div>
@@ -74,44 +74,50 @@ export default function HomePage() {
               icon="💼"
               title="Business Card"
               description="Share contact details instantly. Save to phone with one tap."
+              color="golden"
             />
             <FeatureCard
               icon="📶"
               title="Wi-Fi Sharing"
               description="Connect guests to your network. No password typing needed."
+              color="blue"
             />
             <FeatureCard
               icon="🔗"
               title="Link Hub"
               description="All your links in one place. Like Linktree, but on a tag."
+              color="golden"
             />
             <FeatureCard
               icon="🏥"
               title="Emergency Info"
               description="Medical info accessible in emergencies. Could save a life."
+              color="blue"
             />
             <FeatureCard
               icon="↗️"
               title="Redirect"
               description="Send visitors to any URL. Perfect for marketing."
+              color="golden"
             />
             <FeatureCard
               icon="🔄"
               title="Switch Modes"
               description="Change what your tag does anytime. No new hardware."
+              color="blue"
             />
           </div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="py-20 bg-stone-50">
+      <section className="py-20 border-t-2 border-black">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-2xl font-semibold text-stone-900 mb-3">
+            <h2 className="text-2xl font-bold text-black mb-3">
               How it works
             </h2>
-            <p className="text-stone-500">
+            <p className="text-black/60">
               Get started in under 5 minutes.
             </p>
           </div>
@@ -136,17 +142,17 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20">
+      <section className="py-20 bg-[var(--golden)] border-t-2 border-black">
         <div className="max-w-2xl mx-auto px-6 text-center">
-          <h2 className="text-2xl font-semibold text-stone-900 mb-3">
+          <h2 className="text-2xl font-bold text-black mb-3">
             Ready to go digital?
           </h2>
-          <p className="text-stone-500 mb-8">
+          <p className="text-black/70 mb-8">
             Join thousands who&apos;ve already upgraded their networking.
           </p>
           <Link
             href="/signup"
-            className="inline-block px-6 py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 transition-colors"
+            className="inline-block px-6 py-3 bg-black text-white rounded-xl font-semibold border-2 border-black shadow-[4px_4px_0_#000] hover:shadow-[6px_6px_0_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
           >
             Create free account
           </Link>
@@ -154,11 +160,11 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-stone-200">
+      <footer className="bg-black text-white">
         <div className="max-w-5xl mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-stone-900 font-semibold">Nexo</div>
-            <p className="text-stone-400 text-sm">
+            <div className="font-bold text-lg">✨ Nexo</div>
+            <p className="text-white/60 text-sm">
               © {new Date().getFullYear()} Nexo. All rights reserved.
             </p>
           </div>
@@ -168,12 +174,14 @@ export default function HomePage() {
   )
 }
 
-function FeatureCard({ icon, title, description }: { icon: string; title: string; description: string }) {
+function FeatureCard({ icon, title, description, color }: { icon: string; title: string; description: string; color: 'golden' | 'blue' }) {
+  const shadowClass = color === 'golden' ? 'shadow-golden' : 'shadow-blue'
+
   return (
-    <div className="bg-white rounded-xl border border-stone-200 p-6 hover:border-stone-300 hover:shadow-sm transition-all">
-      <div className="text-2xl mb-3">{icon}</div>
-      <h3 className="font-medium text-stone-900 mb-1">{title}</h3>
-      <p className="text-stone-500 text-sm leading-relaxed">{description}</p>
+    <div className={`${shadowClass} p-6 card-hover`}>
+      <div className="text-3xl mb-3">{icon}</div>
+      <h3 className="font-semibold text-black mb-2">{title}</h3>
+      <p className="text-black/60 text-sm leading-relaxed">{description}</p>
     </div>
   )
 }
@@ -181,11 +189,11 @@ function FeatureCard({ icon, title, description }: { icon: string; title: string
 function StepCard({ number, title, description }: { number: string; title: string; description: string }) {
   return (
     <div className="text-center">
-      <div className="w-10 h-10 bg-stone-900 text-white rounded-full flex items-center justify-center font-medium mx-auto mb-4">
+      <div className="w-12 h-12 bg-[var(--golden)] text-black rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4 border-2 border-black shadow-[3px_3px_0_#000]">
         {number}
       </div>
-      <h3 className="font-medium text-stone-900 mb-2">{title}</h3>
-      <p className="text-stone-500 text-sm leading-relaxed">{description}</p>
+      <h3 className="font-semibold text-black mb-2">{title}</h3>
+      <p className="text-black/60 text-sm leading-relaxed">{description}</p>
     </div>
   )
 }

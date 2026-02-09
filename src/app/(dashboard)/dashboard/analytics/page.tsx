@@ -82,12 +82,12 @@ export default async function AnalyticsPage() {
     return (
         <div className="max-w-4xl mx-auto">
             <div className="mb-6">
-                <Link href="/dashboard" className="text-stone-500 hover:text-stone-700 text-sm transition-colors">
+                <Link href="/dashboard" className="text-black/60 hover:text-black text-sm font-medium transition-colors">
                     ← Back to Dashboard
                 </Link>
             </div>
 
-            <h1 className="text-2xl font-semibold text-stone-900 mb-6">Analytics</h1>
+            <h1 className="text-2xl font-bold text-black mb-6">📊 Analytics</h1>
 
             {/* Stats Overview */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -98,61 +98,60 @@ export default async function AnalyticsPage() {
             </div>
 
             {/* Top Tags */}
-            <div className="bg-white rounded-xl border border-stone-200 p-5 mb-6">
-                <h2 className="font-medium text-stone-900 mb-4">Top Performing Tags</h2>
+            <div className="shadow-golden p-5 mb-6">
+                <h2 className="font-bold text-black mb-4">🏆 Top Performing Tags</h2>
 
                 {tags && tags.length > 0 ? (
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                         {tags.slice(0, 5).map((tag, index) => (
                             <Link
                                 key={tag.id}
                                 href={`/dashboard/tags/${tag.id}/analytics`}
-                                className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-stone-50 transition-colors"
+                                className="flex items-center justify-between py-3 px-4 rounded-lg border-2 border-black bg-white hover:bg-[var(--golden-light)] transition-colors"
                             >
                                 <div className="flex items-center gap-3">
-                                    <span className="w-6 h-6 rounded-full bg-stone-100 flex items-center justify-center text-sm font-medium text-stone-600">
+                                    <span className="w-8 h-8 rounded-full bg-[var(--golden)] border-2 border-black flex items-center justify-center text-sm font-bold text-black">
                                         {index + 1}
                                     </span>
-                                    <span className="text-stone-700">{tag.label || tag.code}</span>
+                                    <span className="text-black font-medium">{tag.label || tag.code}</span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-stone-900 font-medium">{tag.tap_count}</span>
-                                    <span className="text-stone-400 text-sm">taps</span>
+                                    <span className="badge-golden">{tag.tap_count} taps</span>
                                 </div>
                             </Link>
                         ))}
                     </div>
                 ) : (
-                    <p className="text-stone-500 text-sm">No tags yet. Create one to start tracking!</p>
+                    <p className="text-black/60 text-sm">No tags yet. Create one to start tracking!</p>
                 )}
             </div>
 
             {/* Recent Activity */}
-            <div className="bg-white rounded-xl border border-stone-200 p-5">
-                <h2 className="font-medium text-stone-900 mb-4">Recent Activity</h2>
+            <div className="shadow-blue p-5">
+                <h2 className="font-bold text-black mb-4">⚡ Recent Activity</h2>
 
                 {recentTaps.length > 0 ? (
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                         {recentTaps.map(tap => {
                             const tag = tags?.find(t => t.id === tap.tag_id)
                             const timeAgo = getRelativeTime(tap.tapped_at)
 
                             return (
-                                <div key={tap.id} className="flex items-center justify-between py-2 border-b border-stone-100 last:border-0">
+                                <div key={tap.id} className="flex items-center justify-between py-3 px-4 bg-white rounded-lg border-2 border-black/20">
                                     <div className="flex items-center gap-3">
                                         <span className="text-lg">📱</span>
                                         <div>
-                                            <span className="text-stone-700">{tag?.label || 'Tag'}</span>
-                                            <span className="text-stone-400"> was scanned</span>
+                                            <span className="text-black font-medium">{tag?.label || 'Tag'}</span>
+                                            <span className="text-black/60"> was scanned</span>
                                         </div>
                                     </div>
-                                    <span className="text-stone-400 text-sm">{timeAgo}</span>
+                                    <span className="badge-blue text-xs">{timeAgo}</span>
                                 </div>
                             )
                         })}
                     </div>
                 ) : (
-                    <p className="text-stone-500 text-sm">No taps recorded yet. Share your tags to start!</p>
+                    <p className="text-black/60 text-sm">No taps recorded yet. Share your tags to start!</p>
                 )}
             </div>
         </div>

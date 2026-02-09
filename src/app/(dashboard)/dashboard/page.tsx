@@ -1,6 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import { getTagUrl } from '@/lib/utils/tag-codes'
 import type { Tag } from '@/lib/types/database'
 
 export default async function DashboardPage() {
@@ -20,20 +19,20 @@ export default async function DashboardPage() {
             {/* Header */}
             <div className="flex justify-between items-center mb-8">
                 <div>
-                    <h1 className="text-2xl font-semibold text-stone-900">Your Tags</h1>
-                    <p className="text-stone-500 mt-1 text-sm">Manage your NFC tags and their modes</p>
+                    <h1 className="text-2xl font-bold text-black">Your Tags</h1>
+                    <p className="text-black/60 mt-1 text-sm">Manage your NFC tags and their modes</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <Link
                         href="/dashboard/analytics"
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-700 rounded-lg text-sm font-medium hover:bg-stone-200 transition-colors"
+                        className="btn-secondary inline-flex items-center gap-2 text-sm"
                     >
                         <span>📊</span>
                         <span>Analytics</span>
                     </Link>
                     <Link
                         href="/dashboard/tags/new"
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-stone-900 text-white rounded-lg text-sm font-medium hover:bg-stone-800 transition-colors"
+                        className="btn-primary inline-flex items-center gap-2 text-sm"
                     >
                         <span>+</span>
                         <span>Create Tag</span>
@@ -41,14 +40,13 @@ export default async function DashboardPage() {
                 </div>
             </div>
 
-
             {/* Tags Grid */}
             {(!tags || tags.length === 0) ? (
                 <EmptyState />
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {tags.map((tag) => (
-                        <TagCard key={tag.id} tag={tag} />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {tags.map((tag, index) => (
+                        <TagCard key={tag.id} tag={tag} index={index} />
                     ))}
                 </div>
             )}
@@ -56,7 +54,7 @@ export default async function DashboardPage() {
     )
 }
 
-function TagCard({ tag }: { tag: Tag }) {
+function TagCard({ tag, index }: { tag: Tag; index: number }) {
     const modeIcons: Record<string, string> = {
         business_card: '💼',
         wifi: '📶',
@@ -73,31 +71,31 @@ function TagCard({ tag }: { tag: Tag }) {
         redirect: 'Redirect',
     }
 
+    // Alternate between golden and blue shadows
+    const shadowClass = index % 2 === 0 ? 'shadow-golden' : 'shadow-blue'
+
     return (
         <Link
             href={`/dashboard/tags/${tag.id}`}
-            className="block bg-white rounded-xl border border-stone-200 p-5 hover:border-stone-300 hover:shadow-sm transition-all"
+            className={`block p-5 ${shadowClass} card-hover`}
         >
             <div className="flex items-start justify-between mb-3">
                 <div className="text-3xl">{modeIcons[tag.active_mode] || '🏷️'}</div>
-                <div className={`px-2 py-0.5 rounded-full text-xs font-medium ${tag.is_active
-                    ? 'bg-green-50 text-green-600'
-                    : 'bg-stone-100 text-stone-500'
-                    }`}>
+                <div className={`${tag.is_active ? 'badge-golden' : 'badge-blue'}`}>
                     {tag.is_active ? 'Active' : 'Inactive'}
                 </div>
             </div>
 
-            <h3 className="font-medium text-stone-900 mb-1">
+            <h3 className="font-semibold text-black mb-1">
                 {tag.label || 'Untitled Tag'}
             </h3>
-            <p className="text-stone-500 text-sm mb-3">
+            <p className="text-black/60 text-sm mb-3">
                 {modeNames[tag.active_mode] || tag.active_mode}
             </p>
 
             <div className="flex items-center justify-between text-xs">
-                <span className="text-stone-400 font-mono">{tag.code}</span>
-                <span className="text-stone-400">{tag.tap_count} taps</span>
+                <span className="text-black/40 font-mono">{tag.code}</span>
+                <span className="text-black/40">{tag.tap_count} taps</span>
             </div>
         </Link>
     )
@@ -105,15 +103,15 @@ function TagCard({ tag }: { tag: Tag }) {
 
 function EmptyState() {
     return (
-        <div className="text-center py-16 bg-white rounded-xl border border-dashed border-stone-200">
+        <div className="text-center py-16 shadow-golden">
             <div className="text-5xl mb-4">🏷️</div>
-            <h3 className="font-medium text-stone-900 mb-2">No tags yet</h3>
-            <p className="text-stone-500 text-sm mb-6 max-w-sm mx-auto">
+            <h3 className="font-semibold text-black mb-2">No tags yet</h3>
+            <p className="text-black/60 text-sm mb-6 max-w-sm mx-auto">
                 Create your first NFC tag to start sharing your digital identity.
             </p>
             <Link
                 href="/dashboard/tags/new"
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-stone-900 text-white rounded-lg text-sm font-medium hover:bg-stone-800 transition-colors"
+                className="btn-primary inline-flex items-center gap-2"
             >
                 <span>+</span>
                 <span>Create Your First Tag</span>

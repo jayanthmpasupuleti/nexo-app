@@ -103,17 +103,17 @@ export default function NewTagPage() {
     return (
         <div className="max-w-2xl mx-auto">
             <div className="mb-6">
-                <Link href="/dashboard" className="text-stone-500 hover:text-stone-700 text-sm transition-colors">
+                <Link href="/dashboard" className="text-black/60 hover:text-black text-sm font-medium transition-colors">
                     ← Back to Dashboard
                 </Link>
             </div>
 
-            <div className="bg-white rounded-xl border border-stone-200 p-6">
-                <h1 className="text-xl font-semibold text-stone-900 mb-1">Create New Tag</h1>
-                <p className="text-stone-500 text-sm mb-6">Choose a mode for your NFC tag</p>
+            <div className="shadow-blue p-6">
+                <h1 className="text-xl font-bold text-black mb-1">Create New Tag ✨</h1>
+                <p className="text-black/60 text-sm mb-6">Choose a mode for your NFC tag</p>
 
                 {error && (
-                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+                    <div className="mb-6 p-4 bg-red-100 border-2 border-black rounded-lg text-red-600 text-sm font-medium">
                         {error}
                     </div>
                 )}
@@ -121,7 +121,7 @@ export default function NewTagPage() {
                 <form onSubmit={handleCreate}>
                     {/* Tag Label */}
                     <div className="mb-6">
-                        <label htmlFor="label" className="block text-stone-600 text-sm mb-2">
+                        <label htmlFor="label" className="block text-black font-medium text-sm mb-2">
                             Tag Name
                         </label>
                         <input
@@ -130,23 +130,28 @@ export default function NewTagPage() {
                             value={label}
                             onChange={(e) => setLabel(e.target.value)}
                             placeholder="e.g., Office Keychain, Wallet Card"
-                            className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 focus:border-transparent text-stone-900 placeholder:text-stone-400"
+                            className="input-sketchy w-full"
                         />
                     </div>
 
                     {/* Mode Selection */}
                     <div className="mb-6">
-                        <label className="block text-stone-600 text-sm mb-3">
+                        <label className="block text-black font-medium text-sm mb-3">
                             Select Mode
                         </label>
                         <div className="space-y-2">
-                            {modes.map((mode) => (
+                            {modes.map((mode, index) => (
                                 <label
                                     key={mode.value}
-                                    className={`block p-4 border rounded-lg cursor-pointer transition-all ${selectedMode === mode.value
-                                        ? 'border-stone-900 bg-stone-50'
-                                        : 'border-stone-200 hover:border-stone-300'
+                                    className={`block p-4 border-2 border-black rounded-lg cursor-pointer transition-all ${selectedMode === mode.value
+                                        ? 'bg-[var(--golden-light)]'
+                                        : 'bg-white hover:bg-gray-50'
                                         }`}
+                                    style={{
+                                        boxShadow: selectedMode === mode.value
+                                            ? `3px 3px 0 ${index % 2 === 0 ? 'var(--golden)' : 'var(--blue)'}`
+                                            : 'none'
+                                    }}
                                 >
                                     <input
                                         type="radio"
@@ -159,8 +164,8 @@ export default function NewTagPage() {
                                     <div className="flex items-center gap-4">
                                         <span className="text-2xl">{mode.icon}</span>
                                         <div>
-                                            <p className="font-medium text-stone-900">{mode.label}</p>
-                                            <p className="text-stone-500 text-sm">{mode.description}</p>
+                                            <p className="font-bold text-black">{mode.label}</p>
+                                            <p className="text-black/60 text-sm">{mode.description}</p>
                                         </div>
                                     </div>
                                 </label>
@@ -171,9 +176,9 @@ export default function NewTagPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {loading ? 'Creating...' : 'Create Tag'}
+                        {loading ? 'Creating...' : 'Create Tag →'}
                     </button>
                 </form>
             </div>

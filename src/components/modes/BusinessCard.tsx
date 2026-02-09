@@ -43,55 +43,55 @@ END:VCARD`
     }
 
     return (
-        <div className="min-h-screen bg-stone-50">
+        <div className="min-h-screen">
             <div className="max-w-lg mx-auto px-6 py-12">
                 {/* Header */}
                 <div className="text-center mb-10">
                     {/* Avatar */}
-                    <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-stone-200 flex items-center justify-center text-2xl font-medium text-stone-600 overflow-hidden relative">
+                    <div className="w-28 h-28 mx-auto mb-4 rounded-full border-3 border-black bg-white flex items-center justify-center text-2xl font-bold text-black overflow-hidden relative"
+                        style={{ boxShadow: '4px 4px 0 var(--golden)' }}>
                         {data.avatar_url ? (
                             <Image
                                 src={data.avatar_url}
                                 alt={data.name || 'Profile'}
                                 fill
                                 className="object-cover"
-                                sizes="96px"
+                                sizes="112px"
                             />
                         ) : (
                             <span>{data.name ? data.name.charAt(0).toUpperCase() : '?'}</span>
                         )}
                     </div>
 
-
                     {/* Name & Title */}
-                    <h1 className="text-2xl font-semibold text-stone-900 mb-1">
+                    <h1 className="text-2xl font-bold text-black mb-1">
                         {data.name || 'Your Name'}
                     </h1>
-                    <p className="text-stone-500">
+                    <p className="text-black/60 font-medium">
                         {data.title}{data.title && data.company && ' · '}{data.company}
                     </p>
                 </div>
 
                 {/* Bio */}
                 {data.bio && (
-                    <p className="text-stone-600 text-center mb-10 leading-relaxed">
+                    <p className="text-black/70 text-center mb-10 leading-relaxed">
                         {data.bio}
                     </p>
                 )}
 
                 {/* Contact Info */}
-                <div className="bg-white rounded-xl border border-stone-200 divide-y divide-stone-100 mb-6">
+                <div className="shadow-golden mb-6 overflow-hidden">
                     {data.email && (
                         <button
                             onClick={() => handleCopy(data.email!, 'email')}
-                            className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-stone-50 transition-colors text-left"
+                            className="w-full flex items-center justify-between px-4 py-4 hover:bg-[var(--golden-light)] transition-colors text-left border-b-2 border-black last:border-b-0"
                         >
                             <div className="flex items-center gap-3">
-                                <span className="text-stone-400">✉️</span>
-                                <span className="text-stone-600">{data.email}</span>
+                                <span className="text-lg">✉️</span>
+                                <span className="text-black font-medium">{data.email}</span>
                             </div>
-                            <span className="text-xs text-stone-400">
-                                {copied === 'email' ? 'Copied!' : 'Copy'}
+                            <span className="badge-golden text-xs">
+                                {copied === 'email' ? '✓ Copied!' : 'Copy'}
                             </span>
                         </button>
                     )}
@@ -99,13 +99,13 @@ END:VCARD`
                     {data.phone && (
                         <a
                             href={`tel:${data.phone}`}
-                            className="flex items-center justify-between px-4 py-3.5 hover:bg-stone-50 transition-colors"
+                            className="flex items-center justify-between px-4 py-4 hover:bg-[var(--golden-light)] transition-colors border-b-2 border-black last:border-b-0"
                         >
                             <div className="flex items-center gap-3">
-                                <span className="text-stone-400">📞</span>
-                                <span className="text-stone-600">{data.phone}</span>
+                                <span className="text-lg">📞</span>
+                                <span className="text-black font-medium">{data.phone}</span>
                             </div>
-                            <span className="text-xs text-stone-400">Call</span>
+                            <span className="badge-blue text-xs">Call</span>
                         </a>
                     )}
 
@@ -114,15 +114,15 @@ END:VCARD`
                             href={data.website}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-between px-4 py-3.5 hover:bg-stone-50 transition-colors"
+                            className="flex items-center justify-between px-4 py-4 hover:bg-[var(--golden-light)] transition-colors border-b-2 border-black last:border-b-0"
                         >
                             <div className="flex items-center gap-3">
-                                <span className="text-stone-400">🌐</span>
-                                <span className="text-stone-600 truncate max-w-[200px]">
+                                <span className="text-lg">🌐</span>
+                                <span className="text-black font-medium truncate max-w-[200px]">
                                     {data.website.replace(/^https?:\/\//, '')}
                                 </span>
                             </div>
-                            <span className="text-xs text-stone-400">Open</span>
+                            <span className="badge-blue text-xs">Open</span>
                         </a>
                     )}
 
@@ -131,13 +131,13 @@ END:VCARD`
                             href={data.linkedin}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-between px-4 py-3.5 hover:bg-stone-50 transition-colors"
+                            className="flex items-center justify-between px-4 py-4 hover:bg-[var(--golden-light)] transition-colors"
                         >
                             <div className="flex items-center gap-3">
-                                <span className="text-stone-400">💼</span>
-                                <span className="text-stone-600">LinkedIn</span>
+                                <span className="text-lg">💼</span>
+                                <span className="text-black font-medium">LinkedIn</span>
                             </div>
-                            <span className="text-xs text-stone-400">Open</span>
+                            <span className="badge-blue text-xs">Open</span>
                         </a>
                     )}
                 </div>
@@ -145,14 +145,14 @@ END:VCARD`
                 {/* Save Contact Button */}
                 <button
                     onClick={handleSaveContact}
-                    className="w-full py-3 bg-stone-900 text-white font-medium rounded-lg hover:bg-stone-800 transition-colors"
+                    className="btn-primary w-full"
                 >
-                    Save Contact
+                    💾 Save Contact
                 </button>
 
                 {/* Footer */}
-                <p className="text-center text-stone-400 text-xs mt-8">
-                    Powered by Nexo
+                <p className="text-center text-black/40 text-xs mt-8 font-medium">
+                    ✨ Powered by Nexo
                 </p>
             </div>
         </div>

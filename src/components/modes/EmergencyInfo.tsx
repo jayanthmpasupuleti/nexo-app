@@ -16,29 +16,30 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
     const contacts = (data.emergency_contacts as Contact[]) || []
 
     return (
-        <div className="min-h-screen bg-stone-50">
+        <div className="min-h-screen">
             <div className="max-w-lg mx-auto px-6 py-8">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-2">
-                        <span className="text-xl">🏥</span>
-                        <h1 className="text-lg font-semibold text-stone-900">
+                        <span className="text-2xl">🏥</span>
+                        <h1 className="text-xl font-bold text-black">
                             Medical ID
                         </h1>
                     </div>
                     <a
                         href="tel:911"
-                        className="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-lg hover:bg-red-600 transition-colors"
+                        className="px-5 py-2 bg-red-500 text-white text-sm font-bold rounded-xl border-2 border-black hover:bg-red-600 transition-colors"
+                        style={{ boxShadow: '3px 3px 0 black' }}
                     >
-                        Call 911
+                        🚨 Call 911
                     </a>
                 </div>
 
                 {/* Blood Type */}
                 {data.blood_type && (
-                    <div className="bg-white rounded-xl border border-stone-200 p-6 mb-4 text-center">
-                        <p className="text-stone-500 text-sm mb-1">Blood Type</p>
-                        <p className="text-4xl font-bold text-stone-900">{data.blood_type}</p>
+                    <div className="shadow-golden p-6 mb-4 text-center">
+                        <p className="text-black/60 text-sm font-medium mb-1">Blood Type</p>
+                        <p className="text-5xl font-bold text-black">{data.blood_type}</p>
                     </div>
                 )}
 
@@ -46,15 +47,15 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
                 <div className="space-y-4">
                     {/* Allergies */}
                     {data.allergies && data.allergies.length > 0 && (
-                        <div className="bg-white rounded-xl border border-stone-200 p-4">
-                            <h3 className="text-sm font-medium text-stone-500 mb-3 flex items-center gap-2">
+                        <div className="shadow-golden bg-red-50 p-4">
+                            <h3 className="text-sm font-bold text-black mb-3 flex items-center gap-2">
                                 <span>⚠️</span> Allergies
                             </h3>
                             <div className="flex flex-wrap gap-2">
                                 {data.allergies.map((allergy, i) => (
                                     <span
                                         key={i}
-                                        className="px-3 py-1 bg-red-50 text-red-700 rounded-full text-sm border border-red-100"
+                                        className="px-3 py-1 bg-red-200 text-black rounded-full text-sm font-bold border-2 border-black"
                                     >
                                         {allergy}
                                     </span>
@@ -65,13 +66,16 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
 
                     {/* Medications */}
                     {data.medications && data.medications.length > 0 && (
-                        <div className="bg-white rounded-xl border border-stone-200 p-4">
-                            <h3 className="text-sm font-medium text-stone-500 mb-3 flex items-center gap-2">
+                        <div className="shadow-blue p-4">
+                            <h3 className="text-sm font-bold text-black mb-3 flex items-center gap-2">
                                 <span>💊</span> Medications
                             </h3>
                             <ul className="space-y-2">
                                 {data.medications.map((med, i) => (
-                                    <li key={i} className="text-stone-700">{med}</li>
+                                    <li key={i} className="text-black font-medium flex items-center gap-2">
+                                        <span className="w-2 h-2 bg-[var(--blue)] rounded-full"></span>
+                                        {med}
+                                    </li>
                                 ))}
                             </ul>
                         </div>
@@ -79,13 +83,16 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
 
                     {/* Medical Conditions */}
                     {data.conditions && data.conditions.length > 0 && (
-                        <div className="bg-white rounded-xl border border-stone-200 p-4">
-                            <h3 className="text-sm font-medium text-stone-500 mb-3 flex items-center gap-2">
+                        <div className="shadow-golden p-4">
+                            <h3 className="text-sm font-bold text-black mb-3 flex items-center gap-2">
                                 <span>🩺</span> Medical Conditions
                             </h3>
                             <ul className="space-y-2">
                                 {data.conditions.map((condition, i) => (
-                                    <li key={i} className="text-stone-700">{condition}</li>
+                                    <li key={i} className="text-black font-medium flex items-center gap-2">
+                                        <span className="w-2 h-2 bg-[var(--golden)] rounded-full"></span>
+                                        {condition}
+                                    </li>
                                 ))}
                             </ul>
                         </div>
@@ -93,32 +100,35 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
 
                     {/* Notes */}
                     {data.notes && (
-                        <div className="bg-white rounded-xl border border-stone-200 p-4">
-                            <h3 className="text-sm font-medium text-stone-500 mb-3 flex items-center gap-2">
+                        <div className="shadow-blue p-4">
+                            <h3 className="text-sm font-bold text-black mb-3 flex items-center gap-2">
                                 <span>📋</span> Notes
                             </h3>
-                            <p className="text-stone-700">{data.notes}</p>
+                            <p className="text-black font-medium">{data.notes}</p>
                         </div>
                     )}
 
                     {/* Emergency Contacts */}
                     {contacts.length > 0 && (
-                        <div className="bg-white rounded-xl border border-stone-200 p-4">
-                            <h3 className="text-sm font-medium text-stone-500 mb-3 flex items-center gap-2">
+                        <div className="shadow-golden p-4">
+                            <h3 className="text-sm font-bold text-black mb-3 flex items-center gap-2">
                                 <span>📞</span> Emergency Contacts
                             </h3>
-                            <div className="space-y-3">
+                            <div className="space-y-2">
                                 {contacts.map((contact, i) => (
                                     <a
                                         key={i}
                                         href={`tel:${contact.phone}`}
-                                        className="flex items-center justify-between p-3 bg-stone-50 rounded-lg hover:bg-stone-100 transition-colors"
+                                        className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-black hover:bg-[var(--golden-light)] transition-colors"
                                     >
                                         <div>
-                                            <p className="text-stone-900 font-medium">{contact.name}</p>
-                                            <p className="text-stone-500 text-sm">{contact.relationship}</p>
+                                            <p className="text-black font-bold">{contact.name}</p>
+                                            <p className="text-black/60 text-sm font-medium">{contact.relationship}</p>
                                         </div>
-                                        <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white">
+                                        <div
+                                            className="w-10 h-10 bg-green-400 rounded-full border-2 border-black flex items-center justify-center"
+                                            style={{ boxShadow: '2px 2px 0 black' }}
+                                        >
                                             📞
                                         </div>
                                     </a>
@@ -129,19 +139,22 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
 
                     {/* Doctor Info */}
                     {(data.doctor_name || data.doctor_phone) && (
-                        <div className="bg-white rounded-xl border border-stone-200 p-4">
-                            <h3 className="text-sm font-medium text-stone-500 mb-3 flex items-center gap-2">
+                        <div className="shadow-blue p-4">
+                            <h3 className="text-sm font-bold text-black mb-3 flex items-center gap-2">
                                 <span>👨‍⚕️</span> Primary Care Doctor
                             </h3>
                             <a
                                 href={`tel:${data.doctor_phone}`}
-                                className="flex items-center justify-between p-3 bg-stone-50 rounded-lg hover:bg-stone-100 transition-colors"
+                                className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-black hover:bg-[var(--blue-light)] transition-colors"
                             >
                                 <div>
-                                    <p className="text-stone-900 font-medium">{data.doctor_name}</p>
-                                    <p className="text-stone-500 text-sm">{data.doctor_phone}</p>
+                                    <p className="text-black font-bold">{data.doctor_name}</p>
+                                    <p className="text-black/60 text-sm font-medium">{data.doctor_phone}</p>
                                 </div>
-                                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                                <div
+                                    className="w-10 h-10 bg-[var(--blue)] rounded-full border-2 border-black flex items-center justify-center"
+                                    style={{ boxShadow: '2px 2px 0 black' }}
+                                >
                                     📞
                                 </div>
                             </a>
@@ -150,8 +163,8 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
                 </div>
 
                 {/* Footer */}
-                <p className="text-center text-stone-400 text-xs mt-8">
-                    Powered by Nexo
+                <p className="text-center text-black/40 text-xs mt-8 font-medium">
+                    ✨ Powered by Nexo
                 </p>
             </div>
         </div>

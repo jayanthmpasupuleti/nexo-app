@@ -16,23 +16,26 @@ export default function LinkHubMode({ data }: LinkHubProps) {
     const links = (data.links as Link[]) || []
 
     return (
-        <div className="min-h-screen bg-stone-50">
+        <div className="min-h-screen">
             <div className="max-w-lg mx-auto px-6 py-12">
                 {/* Header */}
                 <div className="text-center mb-10">
                     {/* Avatar */}
-                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-stone-200 flex items-center justify-center text-2xl font-medium text-stone-600">
-                        {data.title ? data.title.charAt(0).toUpperCase() : '?'}
+                    <div
+                        className="w-24 h-24 mx-auto mb-4 rounded-full border-3 border-black bg-[var(--golden)] flex items-center justify-center text-3xl font-bold text-black"
+                        style={{ boxShadow: '4px 4px 0 var(--black)' }}
+                    >
+                        {data.title ? data.title.charAt(0).toUpperCase() : '🔗'}
                     </div>
 
                     {/* Name */}
-                    <h1 className="text-2xl font-semibold text-stone-900 mb-2">
-                        {data.title || 'Your Name'}
+                    <h1 className="text-2xl font-bold text-black mb-2">
+                        {data.title || 'My Links'}
                     </h1>
 
                     {/* Bio */}
                     {data.bio && (
-                        <p className="text-stone-500 max-w-xs mx-auto">
+                        <p className="text-black/60 max-w-xs mx-auto font-medium">
                             {data.bio}
                         </p>
                     )}
@@ -46,35 +49,31 @@ export default function LinkHubMode({ data }: LinkHubProps) {
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group flex items-center justify-between w-full px-5 py-4 bg-white rounded-xl border border-stone-200 hover:border-stone-300 hover:shadow-sm transition-all"
+                            className={`group flex items-center justify-between w-full px-5 py-4 bg-white rounded-xl border-2 border-black transition-all hover:translate-x-[-2px] hover:translate-y-[-2px]`}
+                            style={{
+                                boxShadow: `4px 4px 0 ${index % 2 === 0 ? 'var(--golden)' : 'var(--blue)'}`
+                            }}
                         >
                             <div className="flex items-center gap-3">
                                 {link.icon && (
-                                    <span className="text-lg">{link.icon}</span>
+                                    <span className="text-xl">{link.icon}</span>
                                 )}
-                                <span className="text-stone-700 font-medium">
+                                <span className="text-black font-bold">
                                     {link.title}
                                 </span>
                             </div>
-                            <svg
-                                className="w-4 h-4 text-stone-400 group-hover:text-stone-600 transition-colors"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
+                            <span className="text-black font-bold text-lg group-hover:translate-x-1 transition-transform">→</span>
                         </a>
                     )) : (
-                        <div className="text-center py-12 text-stone-400">
-                            <p>No links added yet</p>
+                        <div className="text-center py-12 shadow-golden">
+                            <p className="text-black/60 font-medium">No links added yet</p>
                         </div>
                     )}
                 </div>
 
                 {/* Footer */}
-                <p className="text-center text-stone-400 text-xs mt-10">
-                    Powered by Nexo
+                <p className="text-center text-black/40 text-xs mt-10 font-medium">
+                    ✨ Powered by Nexo
                 </p>
             </div>
         </div>

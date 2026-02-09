@@ -39,36 +39,35 @@ export default async function TagEditorPage({ params }: TagEditorPageProps) {
     return (
         <div className="max-w-2xl mx-auto">
             <div className="mb-6">
-                <Link href="/dashboard" className="text-stone-500 hover:text-stone-700 text-sm transition-colors">
+                <Link href="/dashboard" className="text-black/60 hover:text-black text-sm font-medium transition-colors">
                     ← Back to Dashboard
                 </Link>
             </div>
 
             {/* Tag Header */}
-            <div className="bg-white rounded-xl border border-stone-200 p-6 mb-6">
+            <div className="shadow-golden p-6 mb-6">
                 <div className="flex items-start justify-between mb-4">
                     <div>
-                        <h1 className="text-xl font-semibold text-stone-900">
+                        <h1 className="text-xl font-bold text-black">
                             {tag.label || 'Untitled Tag'}
                         </h1>
                         <div className="flex items-center gap-3 mt-1">
-                            <p className="text-stone-500 text-sm">
+                            <p className="text-black/60 text-sm font-medium">
                                 {tag.tap_count} taps
                             </p>
                             <Link
                                 href={`/dashboard/tags/${tag.id}/analytics`}
-                                className="text-stone-500 hover:text-stone-700 text-sm flex items-center gap-1 transition-colors"
+                                className="badge-blue text-xs"
                             >
-                                <span>📊</span>
-                                <span>View Analytics</span>
+                                📊 View Analytics
                             </Link>
                         </div>
                     </div>
-                    <div className={`px-2.5 py-1 rounded-full text-xs font-medium ${tag.is_active
-                        ? 'bg-green-50 text-green-600'
-                        : 'bg-stone-100 text-stone-500'
+                    <div className={`px-3 py-1 rounded-full text-xs font-bold border-2 border-black ${tag.is_active
+                        ? 'bg-green-200 text-black'
+                        : 'bg-gray-200 text-black'
                         }`}>
-                        {tag.is_active ? 'Active' : 'Inactive'}
+                        {tag.is_active ? '✓ Active' : 'Inactive'}
                     </div>
                 </div>
 

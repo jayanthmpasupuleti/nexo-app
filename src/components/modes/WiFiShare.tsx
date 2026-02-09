@@ -27,24 +27,24 @@ export default function WiFiShare({ data }: WiFiShareProps) {
     }
 
     return (
-        <div className="min-h-screen bg-stone-50">
+        <div className="min-h-screen">
             <div className="max-w-lg mx-auto px-6 py-12">
                 {/* Header */}
                 <div className="text-center mb-8">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-stone-100 rounded-full text-stone-500 text-sm mb-4">
+                    <div className="badge-blue inline-flex items-center gap-2 px-4 py-2 mb-4">
                         <span>📶</span>
-                        <span>Wi-Fi</span>
+                        <span className="font-medium">Wi-Fi</span>
                     </div>
-                    <h1 className="text-2xl font-semibold text-stone-900">
+                    <h1 className="text-2xl font-bold text-black">
                         {data.ssid || 'Network Name'}
                     </h1>
-                    <p className="text-stone-500 mt-1">Scan to connect</p>
+                    <p className="text-black/60 mt-1 font-medium">Scan to connect</p>
                 </div>
 
                 {/* QR Code */}
-                <div className="bg-white rounded-xl border border-stone-200 p-6 mb-6">
+                <div className="shadow-golden p-6 mb-6">
                     <div className="flex justify-center mb-6">
-                        <div className="p-4 bg-white border border-stone-100 rounded-lg">
+                        <div className="p-4 bg-white border-2 border-black rounded-lg">
                             <img
                                 src={qrCodeUrl}
                                 alt={`WiFi QR code for ${data.ssid}`}
@@ -53,32 +53,32 @@ export default function WiFiShare({ data }: WiFiShareProps) {
                         </div>
                     </div>
 
-                    <p className="text-center text-stone-500 text-sm">
-                        Point your camera at the QR code to connect
+                    <p className="text-center text-black/60 text-sm font-medium">
+                        📱 Point your camera at the QR code to connect
                     </p>
                 </div>
 
                 {/* Network Details */}
-                <div className="bg-white rounded-xl border border-stone-200 divide-y divide-stone-100 mb-6">
-                    <div className="flex items-center justify-between px-4 py-3.5">
-                        <span className="text-stone-500 text-sm">Network</span>
-                        <span className="text-stone-900 font-medium">{data.ssid}</span>
+                <div className="shadow-blue mb-6 overflow-hidden">
+                    <div className="flex items-center justify-between px-4 py-4 border-b-2 border-black">
+                        <span className="text-black/60 text-sm font-medium">Network</span>
+                        <span className="text-black font-bold">{data.ssid}</span>
                     </div>
 
-                    <div className="flex items-center justify-between px-4 py-3.5">
-                        <span className="text-stone-500 text-sm">Security</span>
-                        <span className="text-stone-900">{data.security || 'WPA2'}</span>
+                    <div className="flex items-center justify-between px-4 py-4 border-b-2 border-black">
+                        <span className="text-black/60 text-sm font-medium">Security</span>
+                        <span className="badge-golden">{data.security || 'WPA2'}</span>
                     </div>
 
-                    <div className="flex items-center justify-between px-4 py-3.5">
-                        <span className="text-stone-500 text-sm">Password</span>
+                    <div className="flex items-center justify-between px-4 py-4">
+                        <span className="text-black/60 text-sm font-medium">Password</span>
                         <div className="flex items-center gap-2">
-                            <span className="text-stone-900 font-mono text-sm">
+                            <span className="text-black font-mono text-sm font-bold">
                                 {showPassword ? data.password : '••••••••'}
                             </span>
                             <button
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="text-stone-400 hover:text-stone-600 transition-colors"
+                                className="w-8 h-8 border-2 border-black rounded-full flex items-center justify-center hover:bg-[var(--golden-light)] transition-colors"
                             >
                                 {showPassword ? '🙈' : '👁️'}
                             </button>
@@ -89,14 +89,14 @@ export default function WiFiShare({ data }: WiFiShareProps) {
                 {/* Copy Password Button */}
                 <button
                     onClick={handleCopyPassword}
-                    className="w-full py-3 bg-stone-900 text-white font-medium rounded-lg hover:bg-stone-800 transition-colors"
+                    className="btn-primary w-full"
                 >
-                    {copied ? 'Copied!' : 'Copy Password'}
+                    {copied ? '✓ Copied!' : '📋 Copy Password'}
                 </button>
 
                 {/* Footer */}
-                <p className="text-center text-stone-400 text-xs mt-8">
-                    Powered by Nexo
+                <p className="text-center text-black/40 text-xs mt-8 font-medium">
+                    ✨ Powered by Nexo
                 </p>
             </div>
         </div>
