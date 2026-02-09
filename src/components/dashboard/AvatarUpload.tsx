@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { uploadAvatar, deleteAvatar } from '@/lib/utils/avatar-upload'
+import { LuCamera, LuTrash2, LuCheck } from 'react-icons/lu'
 
 interface AvatarUploadProps {
     currentAvatarUrl: string | null
@@ -127,11 +128,11 @@ export default function AvatarUpload({ currentAvatarUrl, tagId, businessCardId, 
 
     return (
         <div className="mb-6">
-            <label className="block text-stone-600 text-sm mb-3">Profile Photo</label>
+            <label className="block text-black/60 text-sm mb-3">Profile Photo</label>
 
             <div className="flex items-center gap-4">
                 {/* Avatar Preview */}
-                <div className="relative w-20 h-20 rounded-full overflow-hidden bg-stone-200 flex items-center justify-center flex-shrink-0">
+                <div className="relative w-20 h-20 rounded-full overflow-hidden bg-[var(--golden-light)] flex items-center justify-center flex-shrink-0 border-2 border-black">
                     {displayUrl ? (
                         <Image
                             src={displayUrl}
@@ -142,7 +143,7 @@ export default function AvatarUpload({ currentAvatarUrl, tagId, businessCardId, 
                             key={displayUrl} // Force re-render when URL changes
                         />
                     ) : (
-                        <span className="text-2xl font-medium text-stone-500">
+                        <span className="text-2xl font-bold text-black/60">
                             {getInitials(name || 'U')}
                         </span>
                     )}
@@ -169,8 +170,10 @@ export default function AvatarUpload({ currentAvatarUrl, tagId, businessCardId, 
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
                         disabled={uploading}
-                        className="px-4 py-2 bg-stone-900 text-white text-sm font-medium rounded-lg hover:bg-stone-800 disabled:opacity-50 transition-colors"
+                        className="px-4 py-2 bg-black text-white text-sm font-bold rounded-lg border-2 border-black hover:bg-black/80 disabled:opacity-50 transition-colors inline-flex items-center gap-2"
+                        style={{ boxShadow: '2px 2px 0 var(--golden)' }}
                     >
+                        <LuCamera />
                         {displayUrl ? 'Change Photo' : 'Upload Photo'}
                     </button>
 
@@ -179,8 +182,10 @@ export default function AvatarUpload({ currentAvatarUrl, tagId, businessCardId, 
                             type="button"
                             onClick={handleRemove}
                             disabled={uploading}
-                            className="px-4 py-2 bg-stone-100 text-stone-600 text-sm font-medium rounded-lg hover:bg-stone-200 disabled:opacity-50 transition-colors"
+                            className="px-4 py-2 bg-white text-black text-sm font-bold rounded-lg border-2 border-black hover:bg-gray-50 disabled:opacity-50 transition-colors inline-flex items-center gap-2"
+                            style={{ boxShadow: '2px 2px 0 #000' }}
                         >
+                            <LuTrash2 />
                             Remove
                         </button>
                     )}
@@ -189,7 +194,9 @@ export default function AvatarUpload({ currentAvatarUrl, tagId, businessCardId, 
 
             {/* Success Message */}
             {success && (
-                <p className="mt-2 text-sm text-green-600">✓ Photo saved!</p>
+                <p className="mt-2 text-sm text-green-600 flex items-center gap-1">
+                    <LuCheck /> Photo saved!
+                </p>
             )}
 
             {/* Error Message */}
@@ -198,7 +205,7 @@ export default function AvatarUpload({ currentAvatarUrl, tagId, businessCardId, 
             )}
 
             {/* Helper Text */}
-            <p className="mt-2 text-xs text-stone-400">
+            <p className="mt-2 text-xs text-black/40">
                 JPEG, PNG, WebP, or GIF. Max 2MB.
             </p>
         </div>

@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import type { LinkHub } from '@/lib/types/database'
+import { LuSave, LuCheck, LuPlus, LuX } from 'react-icons/lu'
 
 interface LinkHubEditorProps {
     tagId: string
@@ -65,47 +66,48 @@ export default function LinkHubEditor({ tagId, data }: LinkHubEditorProps) {
     return (
         <div className="space-y-4">
             <div>
-                <label className="block text-stone-600 text-sm mb-2">Title</label>
+                <label className="block text-black/60 text-sm mb-2">Title</label>
                 <input
                     type="text"
                     value={title}
                     onChange={(e) => { setTitle(e.target.value); setSaved(false) }}
-                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900"
+                    className="input-sketchy w-full"
                     placeholder="My Links"
                 />
             </div>
 
             <div>
-                <label className="block text-stone-600 text-sm mb-2">Bio</label>
+                <label className="block text-black/60 text-sm mb-2">Bio</label>
                 <textarea
                     value={bio}
                     onChange={(e) => { setBio(e.target.value); setSaved(false) }}
                     rows={2}
-                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900 placeholder:text-stone-400"
+                    className="input-sketchy w-full resize-none"
                     placeholder="A short description..."
                 />
             </div>
 
             <div>
                 <div className="flex items-center justify-between mb-3">
-                    <label className="text-stone-600 text-sm">Links</label>
+                    <label className="text-black/60 text-sm">Links</label>
                     <button
                         type="button"
                         onClick={addLink}
-                        className="text-stone-900 text-sm font-medium hover:text-stone-700"
+                        className="px-3 py-1.5 bg-[var(--golden)] text-black rounded-lg text-sm font-bold border-2 border-black hover:bg-[var(--golden-light)] transition-colors inline-flex items-center gap-1"
+                        style={{ boxShadow: '2px 2px 0 #000' }}
                     >
-                        + Add Link
+                        <LuPlus /> Add Link
                     </button>
                 </div>
 
                 <div className="space-y-3">
                     {links.map((link, index) => (
-                        <div key={index} className="flex gap-2 items-start bg-stone-50 p-3 rounded-lg border border-stone-100">
+                        <div key={index} className="flex gap-2 items-start bg-white p-3 rounded-lg border-2 border-black" style={{ boxShadow: '2px 2px 0 #000' }}>
                             <input
                                 type="text"
                                 value={link.icon}
                                 onChange={(e) => updateLink(index, 'icon', e.target.value)}
-                                className="w-12 px-2 py-2 border border-stone-200 rounded-lg text-center text-stone-900"
+                                className="w-12 px-2 py-2 border-2 border-black rounded-lg text-center text-black"
                                 placeholder="🔗"
                             />
                             <div className="flex-1 space-y-2">
@@ -113,29 +115,29 @@ export default function LinkHubEditor({ tagId, data }: LinkHubEditorProps) {
                                     type="text"
                                     value={link.title}
                                     onChange={(e) => updateLink(index, 'title', e.target.value)}
-                                    className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm text-stone-900"
+                                    className="input-sketchy w-full text-sm"
                                     placeholder="Link Title"
                                 />
                                 <input
                                     type="url"
                                     value={link.url}
                                     onChange={(e) => updateLink(index, 'url', e.target.value)}
-                                    className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm text-stone-900"
+                                    className="input-sketchy w-full text-sm"
                                     placeholder="https://..."
                                 />
                             </div>
                             <button
                                 type="button"
                                 onClick={() => removeLink(index)}
-                                className="text-red-500 hover:text-red-700 p-2"
+                                className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
                             >
-                                ✕
+                                <LuX className="text-lg" />
                             </button>
                         </div>
                     ))}
 
                     {links.length === 0 && (
-                        <p className="text-stone-400 text-center py-6 text-sm">No links yet. Click &quot;Add Link&quot; to get started.</p>
+                        <p className="text-black/40 text-center py-6 text-sm border-2 border-dashed border-black/20 rounded-lg">No links yet. Click &quot;Add Link&quot; to get started.</p>
                     )}
                 </div>
             </div>
@@ -143,9 +145,15 @@ export default function LinkHubEditor({ tagId, data }: LinkHubEditorProps) {
             <button
                 onClick={handleSave}
                 disabled={saving}
-                className="w-full py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 disabled:opacity-50 transition-colors"
+                className="btn-primary w-full disabled:opacity-50 flex items-center justify-center gap-2"
             >
-                {saving ? 'Saving...' : saved ? '✓ Saved' : 'Save Link Hub'}
+                {saving ? (
+                    <span>Saving...</span>
+                ) : saved ? (
+                    <><LuCheck className="text-lg" /><span>Saved</span></>
+                ) : (
+                    <><LuSave className="text-lg" /><span>Save Link Hub</span></>
+                )}
             </button>
         </div>
     )

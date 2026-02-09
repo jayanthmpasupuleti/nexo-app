@@ -1,6 +1,7 @@
 'use client'
 
 import type { LinkHub } from '@/lib/types/database'
+import { LuLink, LuArrowRight, LuSparkles } from 'react-icons/lu'
 
 interface LinkHubProps {
     data: LinkHub
@@ -25,7 +26,7 @@ export default function LinkHubMode({ data }: LinkHubProps) {
                         className="w-24 h-24 mx-auto mb-4 rounded-full border-3 border-black bg-[var(--golden)] flex items-center justify-center text-3xl font-bold text-black"
                         style={{ boxShadow: '4px 4px 0 var(--black)' }}
                     >
-                        {data.title ? data.title.charAt(0).toUpperCase() : '🔗'}
+                        {data.title ? data.title.charAt(0).toUpperCase() : <LuLink />}
                     </div>
 
                     {/* Name */}
@@ -55,14 +56,14 @@ export default function LinkHubMode({ data }: LinkHubProps) {
                             }}
                         >
                             <div className="flex items-center gap-3">
-                                {link.icon && (
-                                    <span className="text-xl">{link.icon}</span>
-                                )}
+                                <div className={`w-9 h-9 ${index % 2 === 0 ? 'bg-[var(--golden)]' : 'bg-[var(--blue)]'} rounded-lg border-2 border-black flex items-center justify-center`}>
+                                    <LuLink className="text-black" />
+                                </div>
                                 <span className="text-black font-bold">
                                     {link.title}
                                 </span>
                             </div>
-                            <span className="text-black font-bold text-lg group-hover:translate-x-1 transition-transform">→</span>
+                            <LuArrowRight className="text-black text-lg group-hover:translate-x-1 transition-transform" />
                         </a>
                     )) : (
                         <div className="text-center py-12 shadow-golden">
@@ -72,8 +73,8 @@ export default function LinkHubMode({ data }: LinkHubProps) {
                 </div>
 
                 {/* Footer */}
-                <p className="text-center text-black/40 text-xs mt-10 font-medium">
-                    ✨ Powered by Nexo
+                <p className="text-center text-black/40 text-xs mt-10 font-medium flex items-center justify-center gap-1">
+                    <LuSparkles className="text-[var(--golden)]" /> Powered by Nexo
                 </p>
             </div>
         </div>

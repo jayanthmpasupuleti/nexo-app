@@ -1,6 +1,16 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import type { Tag } from '@/lib/types/database'
+import {
+    LuBriefcase,
+    LuWifi,
+    LuLink,
+    LuHeart,
+    LuExternalLink,
+    LuTag,
+    LuChartBar,
+    LuPlus
+} from 'react-icons/lu'
 
 export default async function DashboardPage() {
     const supabase = await createClient()
@@ -25,16 +35,18 @@ export default async function DashboardPage() {
                 <div className="flex items-center gap-3">
                     <Link
                         href="/dashboard/analytics"
-                        className="btn-secondary inline-flex items-center gap-2 text-sm"
+                        className="btn-secondary"
+                        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '12px 20px', whiteSpace: 'nowrap' }}
                     >
-                        <span>📊</span>
+                        <LuChartBar className="text-lg" style={{ flexShrink: 0 }} />
                         <span>Analytics</span>
                     </Link>
                     <Link
                         href="/dashboard/tags/new"
-                        className="btn-primary inline-flex items-center gap-2 text-sm"
+                        className="btn-primary"
+                        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '12px 20px', whiteSpace: 'nowrap' }}
                     >
-                        <span>+</span>
+                        <LuPlus className="text-lg" style={{ flexShrink: 0 }} />
                         <span>Create Tag</span>
                     </Link>
                 </div>
@@ -55,12 +67,12 @@ export default async function DashboardPage() {
 }
 
 function TagCard({ tag, index }: { tag: Tag; index: number }) {
-    const modeIcons: Record<string, string> = {
-        business_card: '💼',
-        wifi: '📶',
-        link_hub: '🔗',
-        emergency: '🏥',
-        redirect: '↗️',
+    const modeIcons: Record<string, React.ReactNode> = {
+        business_card: <LuBriefcase />,
+        wifi: <LuWifi />,
+        link_hub: <LuLink />,
+        emergency: <LuHeart />,
+        redirect: <LuExternalLink />,
     }
 
     const modeNames: Record<string, string> = {
@@ -73,6 +85,7 @@ function TagCard({ tag, index }: { tag: Tag; index: number }) {
 
     // Alternate between golden and blue shadows
     const shadowClass = index % 2 === 0 ? 'shadow-golden' : 'shadow-blue'
+    const iconBg = index % 2 === 0 ? 'bg-[var(--golden)]' : 'bg-[var(--blue)]'
 
     return (
         <Link
@@ -80,7 +93,9 @@ function TagCard({ tag, index }: { tag: Tag; index: number }) {
             className={`block p-5 ${shadowClass} card-hover`}
         >
             <div className="flex items-start justify-between mb-3">
-                <div className="text-3xl">{modeIcons[tag.active_mode] || '🏷️'}</div>
+                <div className={`w-10 h-10 ${iconBg} rounded-lg border-2 border-black flex items-center justify-center text-lg text-black`}>
+                    {modeIcons[tag.active_mode] || <LuTag />}
+                </div>
                 <div className={`${tag.is_active ? 'badge-golden' : 'badge-blue'}`}>
                     {tag.is_active ? 'Active' : 'Inactive'}
                 </div>
@@ -104,7 +119,9 @@ function TagCard({ tag, index }: { tag: Tag; index: number }) {
 function EmptyState() {
     return (
         <div className="text-center py-16 shadow-golden">
-            <div className="text-5xl mb-4">🏷️</div>
+            <div className="w-16 h-16 bg-[var(--golden)] rounded-xl border-2 border-black flex items-center justify-center text-2xl text-black mx-auto mb-4">
+                <LuTag />
+            </div>
             <h3 className="font-semibold text-black mb-2">No tags yet</h3>
             <p className="text-black/60 text-sm mb-6 max-w-sm mx-auto">
                 Create your first NFC tag to start sharing your digital identity.
@@ -113,7 +130,7 @@ function EmptyState() {
                 href="/dashboard/tags/new"
                 className="btn-primary inline-flex items-center gap-2"
             >
-                <span>+</span>
+                <LuPlus />
                 <span>Create Your First Tag</span>
             </Link>
         </div>

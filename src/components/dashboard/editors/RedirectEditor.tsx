@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import type { CustomRedirect } from '@/lib/types/database'
+import { LuSave, LuCheck } from 'react-icons/lu'
 
 interface RedirectEditorProps {
     tagId: string
@@ -38,7 +39,7 @@ export default function RedirectEditor({ tagId, data }: RedirectEditorProps) {
     return (
         <div className="space-y-4">
             <div>
-                <label className="block text-stone-600 text-sm mb-2">
+                <label className="block text-black/60 text-sm mb-2">
                     Redirect URL <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -46,10 +47,10 @@ export default function RedirectEditor({ tagId, data }: RedirectEditorProps) {
                     value={url}
                     onChange={(e) => { setUrl(e.target.value); setSaved(false) }}
                     required
-                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900"
+                    className="input-sketchy w-full"
                     placeholder="https://example.com"
                 />
-                <p className="text-stone-400 text-xs mt-1">
+                <p className="text-black/40 text-xs mt-1">
                     Users who tap your NFC tag will be redirected to this URL
                 </p>
             </div>
@@ -57,9 +58,15 @@ export default function RedirectEditor({ tagId, data }: RedirectEditorProps) {
             <button
                 onClick={handleSave}
                 disabled={saving || !url}
-                className="w-full py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 disabled:opacity-50 transition-colors"
+                className="btn-primary w-full disabled:opacity-50 flex items-center justify-center gap-2"
             >
-                {saving ? 'Saving...' : saved ? '✓ Saved' : 'Save Redirect'}
+                {saving ? (
+                    <span>Saving...</span>
+                ) : saved ? (
+                    <><LuCheck className="text-lg" /><span>Saved</span></>
+                ) : (
+                    <><LuSave className="text-lg" /><span>Save Redirect</span></>
+                )}
             </button>
         </div>
     )

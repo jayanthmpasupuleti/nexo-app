@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { LuCopy, LuCheck, LuExternalLink } from 'react-icons/lu'
 
 interface TagUrlSectionProps {
     tagUrl: string
@@ -17,22 +18,25 @@ export default function TagUrlSection({ tagUrl, tagCode }: TagUrlSectionProps) {
     }
 
     return (
-        <div className="bg-stone-50 rounded-lg p-4">
-            <p className="text-stone-400 text-xs mb-2">Tag URL</p>
+        <div className="bg-white rounded-lg border-2 border-black px-4 py-2 shadow-[2px_2px_0_#000]">
+            <p className="text-black/40 text-xs mb-1">Tag URL</p>
             <div className="flex items-center gap-2">
-                <p className="flex-1 font-mono text-stone-900 text-sm truncate">{tagUrl}</p>
+                <p className="flex-1 font-mono text-black text-sm truncate">{tagUrl}</p>
                 <button
                     onClick={handleCopy}
-                    className="px-3 py-1.5 text-stone-500 hover:text-stone-700 text-xs transition-colors"
+                    className="px-3 py-1.5 bg-white text-black text-sm font-bold transition-colors flex items-center gap-1.5 border-2 border-black rounded-lg hover:bg-gray-50"
+                    style={{ boxShadow: '2px 2px 0 #000' }}
                 >
-                    {copied ? '✓ Copied' : 'Copy'}
+                    {copied ? <><LuCheck className="text-green-600" /> Copied</> : <><LuCopy /> Copy</>}
                 </button>
                 <a
                     href={tagUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 bg-stone-900 text-white rounded-lg text-sm font-medium hover:bg-stone-800 transition-colors"
+                    className="px-3 py-1.5 bg-[var(--golden)] text-black text-sm font-bold transition-colors inline-flex items-center gap-1.5 border-2 border-black rounded-lg hover:bg-[var(--golden-light)]"
+                    style={{ boxShadow: '2px 2px 0 #000' }}
                 >
+                    <LuExternalLink />
                     Open
                 </a>
             </div>

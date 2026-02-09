@@ -10,17 +10,25 @@ import WiFiEditor from './editors/WiFiEditor'
 import LinkHubEditor from './editors/LinkHubEditor'
 import EmergencyEditor from './editors/EmergencyEditor'
 import RedirectEditor from './editors/RedirectEditor'
+import {
+    LuBriefcase,
+    LuWifi,
+    LuLink,
+    LuHeart,
+    LuExternalLink,
+    LuTrash2
+} from 'react-icons/lu'
 
 interface TagEditorProps {
     tag: TagWithData
 }
 
-const modes: { value: TagMode; label: string; icon: string }[] = [
-    { value: 'business_card', label: 'Business Card', icon: '💼' },
-    { value: 'wifi', label: 'Wi-Fi', icon: '📶' },
-    { value: 'link_hub', label: 'Link Hub', icon: '🔗' },
-    { value: 'emergency', label: 'Emergency', icon: '🏥' },
-    { value: 'redirect', label: 'Redirect', icon: '↗️' },
+const modes: { value: TagMode; label: string; icon: React.ReactNode }[] = [
+    { value: 'business_card', label: 'Business Card', icon: <LuBriefcase /> },
+    { value: 'wifi', label: 'Wi-Fi', icon: <LuWifi /> },
+    { value: 'link_hub', label: 'Link Hub', icon: <LuLink /> },
+    { value: 'emergency', label: 'Emergency', icon: <LuHeart /> },
+    { value: 'redirect', label: 'Redirect', icon: <LuExternalLink /> },
 ]
 
 export default function TagEditor({ tag }: TagEditorProps) {
@@ -91,15 +99,17 @@ export default function TagEditor({ tag }: TagEditorProps) {
         }
     }
 
+    const activeModeData = modes.find(m => m.value === activeMode)
+
     return (
         <div className="space-y-6">
             {/* Tag Settings */}
-            <div className="bg-white rounded-xl border border-stone-200 p-6">
-                <h2 className="font-medium text-stone-900 mb-4">Tag Settings</h2>
+            <div className="shadow-golden p-6">
+                <h2 className="font-bold text-black mb-4">Tag Settings</h2>
 
                 <div className="space-y-4">
                     <div>
-                        <label htmlFor="label" className="block text-stone-600 text-sm mb-2">
+                        <label htmlFor="label" className="block text-black/60 text-sm mb-2">
                             Tag Name
                         </label>
                         <input
@@ -107,23 +117,23 @@ export default function TagEditor({ tag }: TagEditorProps) {
                             type="text"
                             value={label}
                             onChange={(e) => setLabel(e.target.value)}
-                            className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900"
+                            className="input-sketchy w-full"
                             placeholder="My Business Card"
                         />
                     </div>
 
-                    <div className="flex items-center justify-between py-3 border-b border-stone-100">
+                    <div className="flex items-center justify-between py-3 border-b-2 border-black/10">
                         <div>
-                            <p className="font-medium text-stone-900">Active</p>
-                            <p className="text-stone-500 text-sm">When disabled, the tag won&apos;t load for visitors</p>
+                            <p className="font-bold text-black">Active</p>
+                            <p className="text-black/60 text-sm">When disabled, the tag won&apos;t load for visitors</p>
                         </div>
                         <button
                             onClick={() => setIsActive(!isActive)}
-                            className={`relative w-11 h-6 rounded-full transition-colors ${isActive ? 'bg-green-500' : 'bg-stone-300'
+                            className={`relative w-11 h-6 rounded-full transition-colors border-2 border-black ${isActive ? 'bg-green-400' : 'bg-gray-200'
                                 }`}
                         >
                             <span
-                                className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${isActive ? 'translate-x-5' : ''
+                                className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full transition-transform border border-black ${isActive ? 'translate-x-5' : ''
                                     }`}
                             />
                         </button>
@@ -131,21 +141,26 @@ export default function TagEditor({ tag }: TagEditorProps) {
 
                     {/* Mode Selector */}
                     <div>
-                        <label className="block text-stone-600 text-sm mb-2">
+                        <label className="block text-black/60 text-sm mb-2">
                             Active Mode
                         </label>
-                        <div className="flex flex-wrap gap-2">
-                            {modes.map((mode) => (
+                        <div className="grid grid-cols-5 gap-2">
+                            {modes.map((mode, index) => (
                                 <button
                                     key={mode.value}
                                     onClick={() => setActiveMode(mode.value)}
-                                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${activeMode === mode.value
-                                        ? 'bg-stone-900 text-white'
-                                        : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                                    className={`px-2 py-2 rounded-lg text-xs font-bold transition-all border-2 border-black flex items-center justify-center gap-1 ${activeMode === mode.value
+                                        ? 'bg-black text-white'
+                                        : 'bg-white text-black hover:bg-gray-50'
                                         }`}
+                                    style={{
+                                        boxShadow: activeMode === mode.value
+                                            ? `2px 2px 0 ${index % 2 === 0 ? 'var(--golden)' : 'var(--blue)'}`
+                                            : 'none'
+                                    }}
                                 >
-                                    <span className="mr-1.5">{mode.icon}</span>
-                                    {mode.label}
+                                    <span className="text-base">{mode.icon}</span>
+                                    <span className="hidden sm:inline">{mode.label}</span>
                                 </button>
                             ))}
                         </div>
@@ -154,7 +169,7 @@ export default function TagEditor({ tag }: TagEditorProps) {
                     <button
                         onClick={handleSaveTag}
                         disabled={saving}
-                        className="w-full py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 disabled:opacity-50 transition-colors"
+                        className="btn-primary w-full disabled:opacity-50"
                     >
                         {saving ? 'Saving...' : 'Save Tag Settings'}
                     </button>
@@ -162,17 +177,25 @@ export default function TagEditor({ tag }: TagEditorProps) {
             </div>
 
             {/* Mode Editor */}
-            <div className="bg-white rounded-xl border border-stone-200 p-6">
-                <h2 className="font-medium text-stone-900 mb-4">
-                    {modes.find(m => m.value === activeMode)?.icon} {modes.find(m => m.value === activeMode)?.label} Settings
+            <div className="shadow-blue p-6">
+                <h2 className="font-bold text-black mb-4 flex items-center gap-2">
+                    <span className="w-8 h-8 bg-[var(--blue)] rounded-lg border-2 border-black flex items-center justify-center">
+                        {activeModeData?.icon}
+                    </span>
+                    {activeModeData?.label} Settings
                 </h2>
                 {renderModeEditor()}
             </div>
 
             {/* Danger Zone */}
-            <div className="bg-red-50 rounded-xl border border-red-100 p-6">
-                <h2 className="font-medium text-red-900 mb-2">Danger Zone</h2>
-                <p className="text-red-600 text-sm mb-4">
+            <div className="bg-red-50 rounded-xl border-2 border-black p-6" style={{ boxShadow: '4px 4px 0 #ef4444' }}>
+                <h2 className="font-bold text-black mb-2 flex items-center gap-2">
+                    <span className="w-8 h-8 bg-red-400 rounded-lg border-2 border-black flex items-center justify-center">
+                        <LuTrash2 className="text-black" />
+                    </span>
+                    Danger Zone
+                </h2>
+                <p className="text-black/70 text-sm mb-4">
                     Once you delete a tag, there is no going back.
                 </p>
                 <div className="flex gap-2">
@@ -181,14 +204,16 @@ export default function TagEditor({ tag }: TagEditorProps) {
                             <button
                                 onClick={handleDelete}
                                 disabled={deleting}
-                                className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 disabled:opacity-50 transition-colors"
+                                className="px-4 py-2 bg-red-500 text-white rounded-lg text-sm font-bold border-2 border-black hover:bg-red-600 disabled:opacity-50 transition-colors"
+                                style={{ boxShadow: '2px 2px 0 #000' }}
                             >
                                 {deleting ? 'Deleting...' : 'Yes, Delete Forever'}
                             </button>
                             <button
                                 onClick={() => setConfirmDelete(false)}
                                 disabled={deleting}
-                                className="px-4 py-2 bg-stone-200 text-stone-700 rounded-lg text-sm font-medium hover:bg-stone-300 disabled:opacity-50 transition-colors"
+                                className="px-4 py-2 bg-white text-black rounded-lg text-sm font-bold border-2 border-black hover:bg-gray-50 disabled:opacity-50 transition-colors"
+                                style={{ boxShadow: '2px 2px 0 #000' }}
                             >
                                 Cancel
                             </button>
@@ -196,14 +221,14 @@ export default function TagEditor({ tag }: TagEditorProps) {
                     ) : (
                         <button
                             onClick={handleDelete}
-                            className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium hover:bg-red-700 transition-colors"
+                            className="px-4 py-2 bg-red-500 text-white rounded-lg text-sm font-bold border-2 border-black hover:bg-red-600 transition-colors"
+                            style={{ boxShadow: '2px 2px 0 #000' }}
                         >
                             Delete Tag
                         </button>
                     )}
                 </div>
             </div>
-
         </div>
     )
 }

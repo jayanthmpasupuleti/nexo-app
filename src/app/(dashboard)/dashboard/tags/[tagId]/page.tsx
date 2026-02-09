@@ -6,6 +6,7 @@ import TagEditor from '@/components/dashboard/TagEditor'
 import TagUrlSection from '@/components/dashboard/TagUrlSection'
 import NFCWriter from '@/components/dashboard/NFCWriter'
 import type { TagWithData } from '@/lib/types/database'
+import { LuArrowLeft, LuChartBar, LuCheck } from 'react-icons/lu'
 
 
 interface TagEditorPageProps {
@@ -39,8 +40,8 @@ export default async function TagEditorPage({ params }: TagEditorPageProps) {
     return (
         <div className="max-w-2xl mx-auto">
             <div className="mb-6">
-                <Link href="/dashboard" className="text-black/60 hover:text-black text-sm font-medium transition-colors">
-                    ← Back to Dashboard
+                <Link href="/dashboard" className="inline-flex items-center gap-2 text-black/60 hover:text-black text-sm font-medium transition-colors">
+                    <LuArrowLeft /> Back to Dashboard
                 </Link>
             </div>
 
@@ -57,17 +58,18 @@ export default async function TagEditorPage({ params }: TagEditorPageProps) {
                             </p>
                             <Link
                                 href={`/dashboard/tags/${tag.id}/analytics`}
-                                className="badge-blue text-xs"
+                                className="badge-blue text-xs inline-flex items-center gap-1"
                             >
-                                📊 View Analytics
+                                <LuChartBar /> View Analytics
                             </Link>
                         </div>
                     </div>
-                    <div className={`px-3 py-1 rounded-full text-xs font-bold border-2 border-black ${tag.is_active
+                    <div className={`px-3 py-1 rounded-full text-xs font-bold border-2 border-black flex items-center gap-1 ${tag.is_active
                         ? 'bg-green-200 text-black'
                         : 'bg-gray-200 text-black'
                         }`}>
-                        {tag.is_active ? '✓ Active' : 'Inactive'}
+                        {tag.is_active && <LuCheck />}
+                        {tag.is_active ? 'Active' : 'Inactive'}
                     </div>
                 </div>
 

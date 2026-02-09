@@ -3,6 +3,16 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import StatCard from '@/components/dashboard/analytics/StatCard'
 import type { Tag, TapEvent } from '@/lib/types/database'
+import {
+    LuArrowLeft,
+    LuChartBar,
+    LuCalendar,
+    LuTrendingUp,
+    LuCalendarDays,
+    LuTrophy,
+    LuZap,
+    LuSmartphone
+} from 'react-icons/lu'
 
 export default async function AnalyticsPage() {
     const supabase = await createClient()
@@ -82,24 +92,30 @@ export default async function AnalyticsPage() {
     return (
         <div className="max-w-4xl mx-auto">
             <div className="mb-6">
-                <Link href="/dashboard" className="text-black/60 hover:text-black text-sm font-medium transition-colors">
-                    ← Back to Dashboard
+                <Link href="/dashboard" className="inline-flex items-center gap-2 text-black/60 hover:text-black text-sm font-medium transition-colors">
+                    <LuArrowLeft /> Back to Dashboard
                 </Link>
             </div>
 
-            <h1 className="text-2xl font-bold text-black mb-6">📊 Analytics</h1>
+            <h1 className="text-2xl font-bold text-black mb-6 flex items-center gap-3">
+                <LuChartBar className="text-[var(--blue)]" />
+                Analytics
+            </h1>
 
             {/* Stats Overview */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <StatCard label="Total Taps" value={totalTaps} icon="📊" />
-                <StatCard label="Today" value={todayTaps} icon="📅" />
-                <StatCard label="This Week" value={weekTaps} icon="📈" />
-                <StatCard label="This Month" value={monthTaps} icon="🗓️" />
+                <StatCard label="Total Taps" value={totalTaps} icon={<LuChartBar />} />
+                <StatCard label="Today" value={todayTaps} icon={<LuCalendar />} />
+                <StatCard label="This Week" value={weekTaps} icon={<LuTrendingUp />} />
+                <StatCard label="This Month" value={monthTaps} icon={<LuCalendarDays />} />
             </div>
 
             {/* Top Tags */}
             <div className="shadow-golden p-5 mb-6">
-                <h2 className="font-bold text-black mb-4">🏆 Top Performing Tags</h2>
+                <h2 className="font-bold text-black mb-4 flex items-center gap-2">
+                    <LuTrophy className="text-[var(--golden)]" />
+                    Top Performing Tags
+                </h2>
 
                 {tags && tags.length > 0 ? (
                     <div className="space-y-2">
@@ -128,7 +144,10 @@ export default async function AnalyticsPage() {
 
             {/* Recent Activity */}
             <div className="shadow-blue p-5">
-                <h2 className="font-bold text-black mb-4">⚡ Recent Activity</h2>
+                <h2 className="font-bold text-black mb-4 flex items-center gap-2">
+                    <LuZap className="text-[var(--blue)]" />
+                    Recent Activity
+                </h2>
 
                 {recentTaps.length > 0 ? (
                     <div className="space-y-2">
@@ -139,7 +158,7 @@ export default async function AnalyticsPage() {
                             return (
                                 <div key={tap.id} className="flex items-center justify-between py-3 px-4 bg-white rounded-lg border-2 border-black/20">
                                     <div className="flex items-center gap-3">
-                                        <span className="text-lg">📱</span>
+                                        <LuSmartphone className="text-lg text-[var(--blue)]" />
                                         <div>
                                             <span className="text-black font-medium">{tag?.label || 'Tag'}</span>
                                             <span className="text-black/60"> was scanned</span>

@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import type { EmergencyInfo } from '@/lib/types/database'
+import { LuSave, LuCheck, LuPlus, LuX } from 'react-icons/lu'
 
 interface EmergencyEditorProps {
     tagId: string
@@ -83,11 +84,11 @@ export default function EmergencyEditor({ tagId, data }: EmergencyEditorProps) {
         <div className="space-y-5">
             {/* Blood Type */}
             <div>
-                <label className="block text-stone-600 text-sm mb-2">Blood Type</label>
+                <label className="block text-black/60 text-sm mb-2">Blood Type</label>
                 <select
                     value={formData.blood_type}
                     onChange={(e) => { setFormData(prev => ({ ...prev, blood_type: e.target.value })); setSaved(false) }}
-                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900"
+                    className="input-sketchy w-full"
                 >
                     <option value="">Select...</option>
                     <option value="A+">A+</option>
@@ -103,36 +104,36 @@ export default function EmergencyEditor({ tagId, data }: EmergencyEditorProps) {
 
             {/* Allergies */}
             <div>
-                <label className="block text-stone-600 text-sm mb-2">Allergies</label>
+                <label className="block text-black/60 text-sm mb-2">Allergies</label>
                 <input
                     type="text"
                     value={formData.allergies.join(', ')}
                     onChange={(e) => handleArrayField('allergies', e.target.value)}
-                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900 placeholder:text-stone-400"
+                    className="input-sketchy w-full"
                     placeholder="Penicillin, Peanuts, Shellfish (comma-separated)"
                 />
             </div>
 
             {/* Medications */}
             <div>
-                <label className="block text-stone-600 text-sm mb-2">Current Medications</label>
+                <label className="block text-black/60 text-sm mb-2">Current Medications</label>
                 <input
                     type="text"
                     value={formData.medications.join(', ')}
                     onChange={(e) => handleArrayField('medications', e.target.value)}
-                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900 placeholder:text-stone-400"
+                    className="input-sketchy w-full"
                     placeholder="Medication names (comma-separated)"
                 />
             </div>
 
             {/* Conditions */}
             <div>
-                <label className="block text-stone-600 text-sm mb-2">Medical Conditions</label>
+                <label className="block text-black/60 text-sm mb-2">Medical Conditions</label>
                 <input
                     type="text"
                     value={formData.conditions.join(', ')}
                     onChange={(e) => handleArrayField('conditions', e.target.value)}
-                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900 placeholder:text-stone-400"
+                    className="input-sketchy w-full"
                     placeholder="Diabetes, Asthma, etc. (comma-separated)"
                 />
             </div>
@@ -140,21 +141,21 @@ export default function EmergencyEditor({ tagId, data }: EmergencyEditorProps) {
             {/* Doctor */}
             <div className="grid grid-cols-2 gap-4">
                 <div>
-                    <label className="block text-stone-600 text-sm mb-2">Doctor Name</label>
+                    <label className="block text-black/60 text-sm mb-2">Doctor Name</label>
                     <input
                         type="text"
                         value={formData.doctor_name}
                         onChange={(e) => { setFormData(prev => ({ ...prev, doctor_name: e.target.value })); setSaved(false) }}
-                        className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900"
+                        className="input-sketchy w-full"
                     />
                 </div>
                 <div>
-                    <label className="block text-stone-600 text-sm mb-2">Doctor Phone</label>
+                    <label className="block text-black/60 text-sm mb-2">Doctor Phone</label>
                     <input
                         type="tel"
                         value={formData.doctor_phone}
                         onChange={(e) => { setFormData(prev => ({ ...prev, doctor_phone: e.target.value })); setSaved(false) }}
-                        className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900"
+                        className="input-sketchy w-full"
                     />
                 </div>
             </div>
@@ -162,37 +163,48 @@ export default function EmergencyEditor({ tagId, data }: EmergencyEditorProps) {
             {/* Emergency Contacts */}
             <div>
                 <div className="flex items-center justify-between mb-3">
-                    <label className="text-stone-600 text-sm">Emergency Contacts</label>
-                    <button type="button" onClick={addContact} className="text-stone-900 text-sm font-medium hover:text-stone-700">
-                        + Add Contact
+                    <label className="text-black/60 text-sm">Emergency Contacts</label>
+                    <button
+                        type="button"
+                        onClick={addContact}
+                        className="px-3 py-1.5 bg-[var(--golden)] text-black rounded-lg text-sm font-bold border-2 border-black hover:bg-[var(--golden-light)] transition-colors inline-flex items-center gap-1"
+                        style={{ boxShadow: '2px 2px 0 #000' }}
+                    >
+                        <LuPlus /> Add Contact
                     </button>
                 </div>
                 <div className="space-y-3">
                     {contacts.map((contact, index) => (
-                        <div key={index} className="bg-stone-50 p-3 rounded-lg border border-stone-100 space-y-2">
+                        <div key={index} className="bg-white p-3 rounded-lg border-2 border-black space-y-2" style={{ boxShadow: '2px 2px 0 #000' }}>
                             <div className="flex gap-2">
                                 <input
                                     type="text"
                                     value={contact.name}
                                     onChange={(e) => updateContact(index, 'name', e.target.value)}
-                                    className="flex-1 px-3 py-2 border border-stone-200 rounded-lg text-sm text-stone-900"
+                                    className="input-sketchy flex-1 text-sm"
                                     placeholder="Name"
                                 />
-                                <button type="button" onClick={() => removeContact(index)} className="text-red-500 px-2 hover:text-red-700">✕</button>
+                                <button
+                                    type="button"
+                                    onClick={() => removeContact(index)}
+                                    className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                                >
+                                    <LuX className="text-lg" />
+                                </button>
                             </div>
                             <div className="grid grid-cols-2 gap-2">
                                 <input
                                     type="tel"
                                     value={contact.phone}
                                     onChange={(e) => updateContact(index, 'phone', e.target.value)}
-                                    className="px-3 py-2 border border-stone-200 rounded-lg text-sm text-stone-900"
+                                    className="input-sketchy text-sm"
                                     placeholder="Phone"
                                 />
                                 <input
                                     type="text"
                                     value={contact.relationship}
                                     onChange={(e) => updateContact(index, 'relationship', e.target.value)}
-                                    className="px-3 py-2 border border-stone-200 rounded-lg text-sm text-stone-900"
+                                    className="input-sketchy text-sm"
                                     placeholder="Relationship"
                                 />
                             </div>
@@ -203,12 +215,12 @@ export default function EmergencyEditor({ tagId, data }: EmergencyEditorProps) {
 
             {/* Notes */}
             <div>
-                <label className="block text-stone-600 text-sm mb-2">Additional Notes</label>
+                <label className="block text-black/60 text-sm mb-2">Additional Notes</label>
                 <textarea
                     value={formData.notes}
                     onChange={(e) => { setFormData(prev => ({ ...prev, notes: e.target.value })); setSaved(false) }}
                     rows={3}
-                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900 placeholder:text-stone-400"
+                    className="input-sketchy w-full resize-none"
                     placeholder="Any other important medical information..."
                 />
             </div>
@@ -216,9 +228,15 @@ export default function EmergencyEditor({ tagId, data }: EmergencyEditorProps) {
             <button
                 onClick={handleSave}
                 disabled={saving}
-                className="w-full py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 disabled:opacity-50 transition-colors"
+                className="btn-primary w-full disabled:opacity-50 flex items-center justify-center gap-2"
             >
-                {saving ? 'Saving...' : saved ? '✓ Saved' : 'Save Emergency Info'}
+                {saving ? (
+                    <span>Saving...</span>
+                ) : saved ? (
+                    <><LuCheck className="text-lg" /><span>Saved</span></>
+                ) : (
+                    <><LuSave className="text-lg" /><span>Save Emergency Info</span></>
+                )}
             </button>
         </div>
     )

@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import type { BusinessCard } from '@/lib/types/database'
 import AvatarUpload from '../AvatarUpload'
+import { LuSave, LuCheck } from 'react-icons/lu'
 
 interface BusinessCardEditorProps {
     tagId: string
@@ -78,13 +79,13 @@ export default function BusinessCardEditor({ tagId, data }: BusinessCardEditorPr
             </div>
 
             <div>
-                <label className="block text-stone-600 text-sm mb-2">Bio</label>
+                <label className="block text-black/60 text-sm mb-2">Bio</label>
                 <textarea
                     name="bio"
                     value={formData.bio}
                     onChange={handleChange}
                     rows={3}
-                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900 placeholder:text-stone-400"
+                    className="input-sketchy w-full resize-none"
                     placeholder="A brief description about yourself..."
                 />
             </div>
@@ -92,9 +93,15 @@ export default function BusinessCardEditor({ tagId, data }: BusinessCardEditorPr
             <button
                 onClick={handleSave}
                 disabled={saving}
-                className="w-full py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 disabled:opacity-50 transition-colors"
+                className="btn-primary w-full disabled:opacity-50 flex items-center justify-center gap-2"
             >
-                {saving ? 'Saving...' : saved ? '✓ Saved' : 'Save Business Card'}
+                {saving ? (
+                    <span>Saving...</span>
+                ) : saved ? (
+                    <><LuCheck className="text-lg" /><span>Saved</span></>
+                ) : (
+                    <><LuSave className="text-lg" /><span>Save Business Card</span></>
+                )}
             </button>
         </div>
     )
@@ -111,7 +118,7 @@ function InputField({ label, name, value, onChange, type = 'text', required = fa
 }) {
     return (
         <div>
-            <label className="block text-stone-600 text-sm mb-2">
+            <label className="block text-black/60 text-sm mb-2">
                 {label} {required && <span className="text-red-500">*</span>}
             </label>
             <input
@@ -121,7 +128,7 @@ function InputField({ label, name, value, onChange, type = 'text', required = fa
                 onChange={onChange}
                 required={required}
                 placeholder={placeholder}
-                className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900 placeholder:text-stone-400"
+                className="input-sketchy w-full"
             />
         </div>
     )

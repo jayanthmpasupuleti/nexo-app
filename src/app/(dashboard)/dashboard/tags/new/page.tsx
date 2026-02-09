@@ -10,13 +10,22 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { generateTagCode } from '@/lib/utils/tag-codes'
 import type { TagMode, Tag, Profile } from '@/lib/types/database'
+import {
+    LuArrowLeft,
+    LuBriefcase,
+    LuWifi,
+    LuLink,
+    LuHeart,
+    LuExternalLink,
+    LuSparkles
+} from 'react-icons/lu'
 
-const modes: { value: TagMode; label: string; icon: string; description: string }[] = [
-    { value: 'business_card', label: 'Business Card', icon: '💼', description: 'Share your contact details and professional info' },
-    { value: 'wifi', label: 'Wi-Fi', icon: '📶', description: 'Let guests connect to your network instantly' },
-    { value: 'link_hub', label: 'Link Hub', icon: '🔗', description: 'Linktree-style page with all your links' },
-    { value: 'emergency', label: 'Emergency', icon: '🏥', description: 'Medical info and emergency contacts' },
-    { value: 'redirect', label: 'Redirect', icon: '↗️', description: 'Redirect to any URL of your choice' },
+const modes: { value: TagMode; label: string; icon: React.ReactNode; description: string }[] = [
+    { value: 'business_card', label: 'Business Card', icon: <LuBriefcase />, description: 'Share your contact details and professional info' },
+    { value: 'wifi', label: 'Wi-Fi', icon: <LuWifi />, description: 'Let guests connect to your network instantly' },
+    { value: 'link_hub', label: 'Link Hub', icon: <LuLink />, description: 'Linktree-style page with all your links' },
+    { value: 'emergency', label: 'Emergency', icon: <LuHeart />, description: 'Medical info and emergency contacts' },
+    { value: 'redirect', label: 'Redirect', icon: <LuExternalLink />, description: 'Redirect to any URL of your choice' },
 ]
 
 export default function NewTagPage() {
@@ -103,13 +112,15 @@ export default function NewTagPage() {
     return (
         <div className="max-w-2xl mx-auto">
             <div className="mb-6">
-                <Link href="/dashboard" className="text-black/60 hover:text-black text-sm font-medium transition-colors">
-                    ← Back to Dashboard
+                <Link href="/dashboard" className="inline-flex items-center gap-2 text-black/60 hover:text-black text-sm font-medium transition-colors">
+                    <LuArrowLeft /> Back to Dashboard
                 </Link>
             </div>
 
             <div className="shadow-blue p-6">
-                <h1 className="text-xl font-bold text-black mb-1">Create New Tag ✨</h1>
+                <h1 className="text-xl font-bold text-black mb-1 flex items-center gap-2">
+                    Create New Tag <LuSparkles className="text-[var(--golden)]" />
+                </h1>
                 <p className="text-black/60 text-sm mb-6">Choose a mode for your NFC tag</p>
 
                 {error && (
@@ -162,7 +173,9 @@ export default function NewTagPage() {
                                         className="sr-only"
                                     />
                                     <div className="flex items-center gap-4">
-                                        <span className="text-2xl">{mode.icon}</span>
+                                        <div className={`w-10 h-10 ${index % 2 === 0 ? 'bg-[var(--golden)]' : 'bg-[var(--blue)]'} rounded-lg border-2 border-black flex items-center justify-center text-lg text-black`}>
+                                            {mode.icon}
+                                        </div>
                                         <div>
                                             <p className="font-bold text-black">{mode.label}</p>
                                             <p className="text-black/60 text-sm">{mode.description}</p>

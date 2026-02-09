@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import type { WifiConfig, WifiSecurity } from '@/lib/types/database'
+import { LuSave, LuCheck } from 'react-icons/lu'
 
 interface WiFiEditorProps {
     tagId: string
@@ -52,7 +53,7 @@ export default function WiFiEditor({ tagId, data }: WiFiEditorProps) {
     return (
         <div className="space-y-4">
             <div>
-                <label className="block text-stone-600 text-sm mb-2">
+                <label className="block text-black/60 text-sm mb-2">
                     Network Name (SSID) <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -61,13 +62,13 @@ export default function WiFiEditor({ tagId, data }: WiFiEditorProps) {
                     value={formData.ssid}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900"
+                    className="input-sketchy w-full"
                     placeholder="My WiFi Network"
                 />
             </div>
 
             <div>
-                <label className="block text-stone-600 text-sm mb-2">
+                <label className="block text-black/60 text-sm mb-2">
                     Password <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -76,18 +77,18 @@ export default function WiFiEditor({ tagId, data }: WiFiEditorProps) {
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900"
+                    className="input-sketchy w-full"
                 />
-                <p className="text-stone-400 text-xs mt-1">This will be visible to anyone who scans your tag</p>
+                <p className="text-black/40 text-xs mt-1">This will be visible to anyone who scans your tag</p>
             </div>
 
             <div>
-                <label className="block text-stone-600 text-sm mb-2">Security Type</label>
+                <label className="block text-black/60 text-sm mb-2">Security Type</label>
                 <select
                     name="security"
                     value={formData.security}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-stone-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-900 text-stone-900"
+                    className="input-sketchy w-full"
                 >
                     <option value="WPA">WPA</option>
                     <option value="WPA2">WPA2</option>
@@ -104,9 +105,9 @@ export default function WiFiEditor({ tagId, data }: WiFiEditorProps) {
                     name="hidden"
                     checked={formData.hidden}
                     onChange={handleChange}
-                    className="w-4 h-4 rounded border-stone-300 text-stone-900 focus:ring-stone-900"
+                    className="w-4 h-4 rounded border-2 border-black accent-[var(--golden)]"
                 />
-                <label htmlFor="hidden" className="text-stone-600 text-sm">
+                <label htmlFor="hidden" className="text-black/60 text-sm">
                     Hidden network
                 </label>
             </div>
@@ -114,9 +115,15 @@ export default function WiFiEditor({ tagId, data }: WiFiEditorProps) {
             <button
                 onClick={handleSave}
                 disabled={saving}
-                className="w-full py-3 bg-stone-900 text-white rounded-lg font-medium hover:bg-stone-800 disabled:opacity-50 transition-colors"
+                className="btn-primary w-full disabled:opacity-50 flex items-center justify-center gap-2"
             >
-                {saving ? 'Saving...' : saved ? '✓ Saved' : 'Save Wi-Fi Settings'}
+                {saving ? (
+                    <span>Saving...</span>
+                ) : saved ? (
+                    <><LuCheck className="text-lg" /><span>Saved</span></>
+                ) : (
+                    <><LuSave className="text-lg" /><span>Save Wi-Fi Settings</span></>
+                )}
             </button>
         </div>
     )

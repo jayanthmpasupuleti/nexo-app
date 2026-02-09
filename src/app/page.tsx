@@ -1,4 +1,14 @@
 import Link from 'next/link'
+import {
+  LuSparkles,
+  LuBriefcase,
+  LuWifi,
+  LuLink,
+  LuHeart,
+  LuExternalLink,
+  LuRefreshCw,
+  LuArrowRight
+} from 'react-icons/lu'
 
 export default function HomePage() {
   return (
@@ -7,7 +17,10 @@ export default function HomePage() {
       <nav className="bg-white border-b-2 border-black">
         <div className="max-w-5xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="text-xl font-bold text-black">✨ Nexo</div>
+            <div className="flex items-center gap-2 text-xl font-bold text-black">
+              <LuSparkles className="text-[var(--golden)]" />
+              <span>Nexo</span>
+            </div>
             <div className="flex items-center gap-4">
               <Link
                 href="/login"
@@ -30,7 +43,7 @@ export default function HomePage() {
       <section className="py-24 bg-white">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--golden-light)] border-2 border-black rounded-full text-black text-sm font-medium mb-8">
-            <span>✨</span>
+            <LuSparkles className="text-[var(--golden)]" />
             <span>NFC-powered digital identity</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-black mb-6 leading-tight tracking-tight">
@@ -44,9 +57,9 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/signup"
-              className="btn-primary text-base"
+              className="btn-primary text-base inline-flex items-center justify-center gap-2"
             >
-              Start for free →
+              Start for free <LuArrowRight />
             </Link>
             <Link
               href="#features"
@@ -71,37 +84,37 @@ export default function HomePage() {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <FeatureCard
-              icon="💼"
+              icon={<LuBriefcase />}
               title="Business Card"
               description="Share contact details instantly. Save to phone with one tap."
               color="golden"
             />
             <FeatureCard
-              icon="📶"
+              icon={<LuWifi />}
               title="Wi-Fi Sharing"
               description="Connect guests to your network. No password typing needed."
               color="blue"
             />
             <FeatureCard
-              icon="🔗"
+              icon={<LuLink />}
               title="Link Hub"
               description="All your links in one place. Like Linktree, but on a tag."
               color="golden"
             />
             <FeatureCard
-              icon="🏥"
+              icon={<LuHeart />}
               title="Emergency Info"
               description="Medical info accessible in emergencies. Could save a life."
               color="blue"
             />
             <FeatureCard
-              icon="↗️"
+              icon={<LuExternalLink />}
               title="Redirect"
               description="Send visitors to any URL. Perfect for marketing."
               color="golden"
             />
             <FeatureCard
-              icon="🔄"
+              icon={<LuRefreshCw />}
               title="Switch Modes"
               description="Change what your tag does anytime. No new hardware."
               color="blue"
@@ -163,7 +176,10 @@ export default function HomePage() {
       <footer className="bg-black text-white">
         <div className="max-w-5xl mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="font-bold text-lg">✨ Nexo</div>
+            <div className="flex items-center gap-2 font-bold text-lg">
+              <LuSparkles className="text-[var(--golden)]" />
+              <span>Nexo</span>
+            </div>
             <p className="text-white/60 text-sm">
               © {new Date().getFullYear()} Nexo. All rights reserved.
             </p>
@@ -174,12 +190,15 @@ export default function HomePage() {
   )
 }
 
-function FeatureCard({ icon, title, description, color }: { icon: string; title: string; description: string; color: 'golden' | 'blue' }) {
+function FeatureCard({ icon, title, description, color }: { icon: React.ReactNode; title: string; description: string; color: 'golden' | 'blue' }) {
   const shadowClass = color === 'golden' ? 'shadow-golden' : 'shadow-blue'
+  const iconBg = color === 'golden' ? 'bg-[var(--golden)]' : 'bg-[var(--blue)]'
 
   return (
     <div className={`${shadowClass} p-6 card-hover`}>
-      <div className="text-3xl mb-3">{icon}</div>
+      <div className={`w-12 h-12 ${iconBg} rounded-xl border-2 border-black flex items-center justify-center text-xl text-black mb-4`}>
+        {icon}
+      </div>
       <h3 className="font-semibold text-black mb-2">{title}</h3>
       <p className="text-black/60 text-sm leading-relaxed">{description}</p>
     </div>

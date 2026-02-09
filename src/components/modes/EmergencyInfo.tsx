@@ -1,6 +1,17 @@
 'use client'
 
 import type { EmergencyInfo } from '@/lib/types/database'
+import {
+    LuHeart,
+    LuTriangleAlert,
+    LuPill,
+    LuStethoscope,
+    LuFileText,
+    LuPhone,
+    LuUser,
+    LuSparkles,
+    LuSiren
+} from 'react-icons/lu'
 
 interface EmergencyInfoProps {
     data: EmergencyInfo
@@ -21,17 +32,19 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-2">
-                        <span className="text-2xl">🏥</span>
+                        <div className="w-10 h-10 bg-red-100 rounded-lg border-2 border-black flex items-center justify-center">
+                            <LuHeart className="text-red-500 text-lg" />
+                        </div>
                         <h1 className="text-xl font-bold text-black">
                             Medical ID
                         </h1>
                     </div>
                     <a
                         href="tel:911"
-                        className="px-5 py-2 bg-red-500 text-white text-sm font-bold rounded-xl border-2 border-black hover:bg-red-600 transition-colors"
+                        className="px-5 py-2 bg-red-500 text-white text-sm font-bold rounded-xl border-2 border-black hover:bg-red-600 transition-colors inline-flex items-center gap-2"
                         style={{ boxShadow: '3px 3px 0 black' }}
                     >
-                        🚨 Call 911
+                        <LuSiren /> Call 911
                     </a>
                 </div>
 
@@ -49,7 +62,7 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
                     {data.allergies && data.allergies.length > 0 && (
                         <div className="shadow-golden bg-red-50 p-4">
                             <h3 className="text-sm font-bold text-black mb-3 flex items-center gap-2">
-                                <span>⚠️</span> Allergies
+                                <LuTriangleAlert className="text-red-500" /> Allergies
                             </h3>
                             <div className="flex flex-wrap gap-2">
                                 {data.allergies.map((allergy, i) => (
@@ -68,7 +81,7 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
                     {data.medications && data.medications.length > 0 && (
                         <div className="shadow-blue p-4">
                             <h3 className="text-sm font-bold text-black mb-3 flex items-center gap-2">
-                                <span>💊</span> Medications
+                                <LuPill className="text-[var(--blue)]" /> Medications
                             </h3>
                             <ul className="space-y-2">
                                 {data.medications.map((med, i) => (
@@ -85,7 +98,7 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
                     {data.conditions && data.conditions.length > 0 && (
                         <div className="shadow-golden p-4">
                             <h3 className="text-sm font-bold text-black mb-3 flex items-center gap-2">
-                                <span>🩺</span> Medical Conditions
+                                <LuStethoscope className="text-[var(--golden)]" /> Medical Conditions
                             </h3>
                             <ul className="space-y-2">
                                 {data.conditions.map((condition, i) => (
@@ -102,7 +115,7 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
                     {data.notes && (
                         <div className="shadow-blue p-4">
                             <h3 className="text-sm font-bold text-black mb-3 flex items-center gap-2">
-                                <span>📋</span> Notes
+                                <LuFileText className="text-[var(--blue)]" /> Notes
                             </h3>
                             <p className="text-black font-medium">{data.notes}</p>
                         </div>
@@ -112,7 +125,7 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
                     {contacts.length > 0 && (
                         <div className="shadow-golden p-4">
                             <h3 className="text-sm font-bold text-black mb-3 flex items-center gap-2">
-                                <span>📞</span> Emergency Contacts
+                                <LuPhone className="text-[var(--golden)]" /> Emergency Contacts
                             </h3>
                             <div className="space-y-2">
                                 {contacts.map((contact, i) => (
@@ -129,7 +142,7 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
                                             className="w-10 h-10 bg-green-400 rounded-full border-2 border-black flex items-center justify-center"
                                             style={{ boxShadow: '2px 2px 0 black' }}
                                         >
-                                            📞
+                                            <LuPhone className="text-black" />
                                         </div>
                                     </a>
                                 ))}
@@ -141,7 +154,7 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
                     {(data.doctor_name || data.doctor_phone) && (
                         <div className="shadow-blue p-4">
                             <h3 className="text-sm font-bold text-black mb-3 flex items-center gap-2">
-                                <span>👨‍⚕️</span> Primary Care Doctor
+                                <LuUser className="text-[var(--blue)]" /> Primary Care Doctor
                             </h3>
                             <a
                                 href={`tel:${data.doctor_phone}`}
@@ -155,7 +168,7 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
                                     className="w-10 h-10 bg-[var(--blue)] rounded-full border-2 border-black flex items-center justify-center"
                                     style={{ boxShadow: '2px 2px 0 black' }}
                                 >
-                                    📞
+                                    <LuPhone className="text-black" />
                                 </div>
                             </a>
                         </div>
@@ -163,8 +176,8 @@ export default function EmergencyInfoMode({ data }: EmergencyInfoProps) {
                 </div>
 
                 {/* Footer */}
-                <p className="text-center text-black/40 text-xs mt-8 font-medium">
-                    ✨ Powered by Nexo
+                <p className="text-center text-black/40 text-xs mt-8 font-medium flex items-center justify-center gap-1">
+                    <LuSparkles className="text-[var(--golden)]" /> Powered by Nexo
                 </p>
             </div>
         </div>

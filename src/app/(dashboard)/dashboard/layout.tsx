@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Profile } from '@/lib/types/database'
+import { LuSparkles, LuLogOut } from 'react-icons/lu'
 
 export default async function DashboardLayout({
     children,
@@ -36,8 +37,9 @@ export default async function DashboardLayout({
                 <div className="max-w-5xl mx-auto px-6">
                     <div className="flex justify-between h-16">
                         <div className="flex items-center">
-                            <Link href="/dashboard" className="text-xl font-bold text-black">
-                                ✨ Nexo
+                            <Link href="/dashboard" className="flex items-center gap-2 text-xl font-bold text-black">
+                                <LuSparkles className="text-[var(--golden)]" />
+                                <span>Nexo</span>
                             </Link>
                         </div>
 
@@ -69,9 +71,10 @@ export default async function DashboardLayout({
                             <form action="/api/auth/signout" method="post">
                                 <button
                                     type="submit"
-                                    className="px-3 py-2 text-black/40 hover:text-black text-sm font-medium transition-colors"
+                                    className="p-2 text-black/40 hover:text-black transition-colors rounded-full hover:bg-black/5"
+                                    title="Sign out"
                                 >
-                                    ↪
+                                    <LuLogOut className="text-lg" />
                                 </button>
                             </form>
                         </div>

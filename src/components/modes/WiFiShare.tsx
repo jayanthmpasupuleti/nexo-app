@@ -3,6 +3,15 @@
 import { useState } from 'react'
 import type { WifiConfig } from '@/lib/types/database'
 import { getWifiQRUrl } from '@/lib/utils/wifi-qr'
+import {
+    LuWifi,
+    LuSmartphone,
+    LuCopy,
+    LuCheck,
+    LuEye,
+    LuEyeOff,
+    LuSparkles
+} from 'react-icons/lu'
 
 interface WiFiShareProps {
     data: WifiConfig
@@ -32,7 +41,7 @@ export default function WiFiShare({ data }: WiFiShareProps) {
                 {/* Header */}
                 <div className="text-center mb-8">
                     <div className="badge-blue inline-flex items-center gap-2 px-4 py-2 mb-4">
-                        <span>📶</span>
+                        <LuWifi />
                         <span className="font-medium">Wi-Fi</span>
                     </div>
                     <h1 className="text-2xl font-bold text-black">
@@ -53,8 +62,8 @@ export default function WiFiShare({ data }: WiFiShareProps) {
                         </div>
                     </div>
 
-                    <p className="text-center text-black/60 text-sm font-medium">
-                        📱 Point your camera at the QR code to connect
+                    <p className="text-center text-black/60 text-sm font-medium flex items-center justify-center gap-2">
+                        <LuSmartphone /> Point your camera at the QR code to connect
                     </p>
                 </div>
 
@@ -80,7 +89,7 @@ export default function WiFiShare({ data }: WiFiShareProps) {
                                 onClick={() => setShowPassword(!showPassword)}
                                 className="w-8 h-8 border-2 border-black rounded-full flex items-center justify-center hover:bg-[var(--golden-light)] transition-colors"
                             >
-                                {showPassword ? '🙈' : '👁️'}
+                                {showPassword ? <LuEyeOff /> : <LuEye />}
                             </button>
                         </div>
                     </div>
@@ -89,14 +98,14 @@ export default function WiFiShare({ data }: WiFiShareProps) {
                 {/* Copy Password Button */}
                 <button
                     onClick={handleCopyPassword}
-                    className="btn-primary w-full"
+                    className="btn-primary w-full inline-flex items-center justify-center gap-2"
                 >
-                    {copied ? '✓ Copied!' : '📋 Copy Password'}
+                    {copied ? <><LuCheck /> Copied!</> : <><LuCopy /> Copy Password</>}
                 </button>
 
                 {/* Footer */}
-                <p className="text-center text-black/40 text-xs mt-8 font-medium">
-                    ✨ Powered by Nexo
+                <p className="text-center text-black/40 text-xs mt-8 font-medium flex items-center justify-center gap-1">
+                    <LuSparkles className="text-[var(--golden)]" /> Powered by Nexo
                 </p>
             </div>
         </div>

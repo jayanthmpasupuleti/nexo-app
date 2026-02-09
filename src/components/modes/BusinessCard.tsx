@@ -3,6 +3,16 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import type { BusinessCard } from '@/lib/types/database'
+import {
+    LuMail,
+    LuPhone,
+    LuGlobe,
+    LuLinkedin,
+    LuDownload,
+    LuSparkles,
+    LuCheck,
+    LuCopy
+} from 'react-icons/lu'
 
 interface BusinessCardProps {
     data: BusinessCard
@@ -87,11 +97,13 @@ END:VCARD`
                             className="w-full flex items-center justify-between px-4 py-4 hover:bg-[var(--golden-light)] transition-colors text-left border-b-2 border-black last:border-b-0"
                         >
                             <div className="flex items-center gap-3">
-                                <span className="text-lg">✉️</span>
+                                <div className="w-9 h-9 bg-[var(--golden)] rounded-lg border-2 border-black flex items-center justify-center">
+                                    <LuMail className="text-black" />
+                                </div>
                                 <span className="text-black font-medium">{data.email}</span>
                             </div>
-                            <span className="badge-golden text-xs">
-                                {copied === 'email' ? '✓ Copied!' : 'Copy'}
+                            <span className="badge-golden text-xs flex items-center gap-1">
+                                {copied === 'email' ? <><LuCheck /> Copied!</> : <><LuCopy /> Copy</>}
                             </span>
                         </button>
                     )}
@@ -102,7 +114,9 @@ END:VCARD`
                             className="flex items-center justify-between px-4 py-4 hover:bg-[var(--golden-light)] transition-colors border-b-2 border-black last:border-b-0"
                         >
                             <div className="flex items-center gap-3">
-                                <span className="text-lg">📞</span>
+                                <div className="w-9 h-9 bg-[var(--blue)] rounded-lg border-2 border-black flex items-center justify-center">
+                                    <LuPhone className="text-black" />
+                                </div>
                                 <span className="text-black font-medium">{data.phone}</span>
                             </div>
                             <span className="badge-blue text-xs">Call</span>
@@ -117,7 +131,9 @@ END:VCARD`
                             className="flex items-center justify-between px-4 py-4 hover:bg-[var(--golden-light)] transition-colors border-b-2 border-black last:border-b-0"
                         >
                             <div className="flex items-center gap-3">
-                                <span className="text-lg">🌐</span>
+                                <div className="w-9 h-9 bg-[var(--golden)] rounded-lg border-2 border-black flex items-center justify-center">
+                                    <LuGlobe className="text-black" />
+                                </div>
                                 <span className="text-black font-medium truncate max-w-[200px]">
                                     {data.website.replace(/^https?:\/\//, '')}
                                 </span>
@@ -134,7 +150,9 @@ END:VCARD`
                             className="flex items-center justify-between px-4 py-4 hover:bg-[var(--golden-light)] transition-colors"
                         >
                             <div className="flex items-center gap-3">
-                                <span className="text-lg">💼</span>
+                                <div className="w-9 h-9 bg-[var(--blue)] rounded-lg border-2 border-black flex items-center justify-center">
+                                    <LuLinkedin className="text-black" />
+                                </div>
                                 <span className="text-black font-medium">LinkedIn</span>
                             </div>
                             <span className="badge-blue text-xs">Open</span>
@@ -145,14 +163,14 @@ END:VCARD`
                 {/* Save Contact Button */}
                 <button
                     onClick={handleSaveContact}
-                    className="btn-primary w-full"
+                    className="btn-primary w-full inline-flex items-center justify-center gap-2"
                 >
-                    💾 Save Contact
+                    <LuDownload /> Save Contact
                 </button>
 
                 {/* Footer */}
-                <p className="text-center text-black/40 text-xs mt-8 font-medium">
-                    ✨ Powered by Nexo
+                <p className="text-center text-black/40 text-xs mt-8 font-medium flex items-center justify-center gap-1">
+                    <LuSparkles className="text-[var(--golden)]" /> Powered by Nexo
                 </p>
             </div>
         </div>
