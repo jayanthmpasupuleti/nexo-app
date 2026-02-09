@@ -23,14 +23,24 @@ export default async function DashboardPage() {
                     <h1 className="text-2xl font-semibold text-stone-900">Your Tags</h1>
                     <p className="text-stone-500 mt-1 text-sm">Manage your NFC tags and their modes</p>
                 </div>
-                <Link
-                    href="/dashboard/tags/new"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-stone-900 text-white rounded-lg text-sm font-medium hover:bg-stone-800 transition-colors"
-                >
-                    <span>+</span>
-                    <span>Create Tag</span>
-                </Link>
+                <div className="flex items-center gap-3">
+                    <Link
+                        href="/dashboard/analytics"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-700 rounded-lg text-sm font-medium hover:bg-stone-200 transition-colors"
+                    >
+                        <span>📊</span>
+                        <span>Analytics</span>
+                    </Link>
+                    <Link
+                        href="/dashboard/tags/new"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-stone-900 text-white rounded-lg text-sm font-medium hover:bg-stone-800 transition-colors"
+                    >
+                        <span>+</span>
+                        <span>Create Tag</span>
+                    </Link>
+                </div>
             </div>
+
 
             {/* Tags Grid */}
             {(!tags || tags.length === 0) ? (

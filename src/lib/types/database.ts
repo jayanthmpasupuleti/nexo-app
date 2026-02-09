@@ -281,3 +281,23 @@ export type TagWithData = Tag & {
     emergency_infos?: EmergencyInfo | null
     custom_redirects?: CustomRedirect | null
 }
+
+// Tap event for analytics
+export interface TapEvent {
+    id: string
+    tag_id: string
+    tapped_at: string
+    user_agent: string | null
+    referrer: string | null
+}
+
+// Analytics aggregation types
+export interface TapCountByDay {
+    tap_date: string
+    tap_count: number
+}
+
+export interface TapCountByHour {
+    hour_of_day: number
+    tap_count: number
+}

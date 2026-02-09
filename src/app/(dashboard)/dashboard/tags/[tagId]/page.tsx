@@ -51,9 +51,18 @@ export default async function TagEditorPage({ params }: TagEditorPageProps) {
                         <h1 className="text-xl font-semibold text-stone-900">
                             {tag.label || 'Untitled Tag'}
                         </h1>
-                        <p className="text-stone-500 text-sm mt-1">
-                            {tag.tap_count} taps
-                        </p>
+                        <div className="flex items-center gap-3 mt-1">
+                            <p className="text-stone-500 text-sm">
+                                {tag.tap_count} taps
+                            </p>
+                            <Link
+                                href={`/dashboard/tags/${tag.id}/analytics`}
+                                className="text-stone-500 hover:text-stone-700 text-sm flex items-center gap-1 transition-colors"
+                            >
+                                <span>📊</span>
+                                <span>View Analytics</span>
+                            </Link>
+                        </div>
                     </div>
                     <div className={`px-2.5 py-1 rounded-full text-xs font-medium ${tag.is_active
                         ? 'bg-green-50 text-green-600'
@@ -66,6 +75,7 @@ export default async function TagEditorPage({ params }: TagEditorPageProps) {
                 {/* Tag URL */}
                 <TagUrlSection tagUrl={tagUrl} tagCode={tag.code} />
             </div>
+
 
             {/* NFC Writer */}
             <div className="mb-6">

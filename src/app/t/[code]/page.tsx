@@ -34,11 +34,19 @@ export default async function TagPage({ params }: TagPageProps) {
         notFound()
     }
 
-    // Increment tap count (fire-and-forget, don't await)
-    ; (supabase.from('tags') as any)
-        .update({ tap_count: tag.tap_count + 1 })
-        .eq('id', tag.id)
-        .then(() => { })
+    // Record tap event and increment tap count (fire-and-forget)
+    ; (async () => {
+        // Insert tap event for analytics
+        await (supabase.from('tap_events') as any).insert({
+            tag_id: tag.id
+        })
+
+        // Also update the quick-access tap count
+        await (supabase.from('tags') as any)
+            .update({ tap_count: tag.tap_count + 1 })
+            .eq('id', tag.id)
+    })()
+
 
     // Render based on active mode
     switch (tag.active_mode) {
