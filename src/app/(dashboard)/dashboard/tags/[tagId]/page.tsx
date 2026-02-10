@@ -17,7 +17,9 @@ export default async function TagEditorPage({ params }: TagEditorPageProps) {
     const { tagId } = await params
     const supabase = await createClient()
 
-    // Fetch tag with all mode data
+    const { data: { user } } = await supabase.auth.getUser()
+
+    // Fetch tag with all mode data - only if owned by current user
     const { data: tag, error } = await supabase
         .from('tags')
         .select(`
@@ -29,6 +31,7 @@ export default async function TagEditorPage({ params }: TagEditorPageProps) {
       custom_redirects (*)
     `)
         .eq('id', tagId)
+        .eq('user_id', user?.id ?? '')
         .single() as { data: TagWithData | null, error: unknown }
 
     if (error || !tag) {

@@ -15,11 +15,14 @@ export default async function TagAnalyticsPage({ params }: TagAnalyticsPageProps
     const { tagId } = await params
     const supabase = await createClient()
 
-    // Get the tag
+    const { data: { user } } = await supabase.auth.getUser()
+
+    // Get the tag - only if owned by current user
     const { data: tag, error } = await supabase
         .from('tags')
         .select('*')
         .eq('id', tagId)
+        .eq('user_id', user?.id ?? '')
         .single() as { data: Tag | null, error: unknown }
 
     if (error || !tag) {

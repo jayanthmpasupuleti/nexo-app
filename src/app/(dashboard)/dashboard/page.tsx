@@ -15,9 +15,12 @@ import {
 export default async function DashboardPage() {
     const supabase = await createClient()
 
+    const { data: { user } } = await supabase.auth.getUser()
+
     const { data: tags, error } = await supabase
         .from('tags')
         .select('*')
+        .eq('user_id', user?.id ?? '')
         .order('created_at', { ascending: false }) as { data: Tag[] | null, error: unknown }
 
     if (error) {
