@@ -27,7 +27,6 @@ export function isValidTagCode(code: string): boolean {
  * Get the full URL for a tag
  */
 export function getTagUrl(code: string): string {
-    const domain = process.env.NEXT_PUBLIC_APP_DOMAIN || 'localhost:3000'
-    const protocol = domain.includes('localhost') ? 'http' : 'https'
-    return `${protocol}://${domain}/t/${code}`
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+    return `${baseUrl}/t/${code}`
 }
