@@ -1,19 +1,22 @@
 import { createClient } from '@/lib/supabase/server'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-const signOutAndRedirect = async () => {
-    const supabase = await createClient()
-    await supabase.auth.signOut()
+async function handleSignOut(request: NextRequest) {
+    try {
+        const supabase = await createClient()
+        await supabase.auth.signOut()
+    } catch (e) {
+        console.error('Sign out error:', e)
+    }
 
-    return NextResponse.redirect(new URL('/login', process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'), {
-        status: 302,
-    })
+    const baseUrl = request.nextUrl.origin
+    return NextResponse.redirect(`${baseUrl}/login`, { status: 302 })
 }
 
-export async function POST() {
-    return signOutAndRedirect()
+export async function POST(request: NextRequest) {
+    return handleSignOut(request)
 }
 
-export async function GET() {
-    return signOutAndRedirect()
+export async function GET(request: NextRequest) {
+    return handleSignOut(request)
 }
