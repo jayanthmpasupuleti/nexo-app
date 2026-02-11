@@ -54,6 +54,7 @@ export default function QRCodeDisplay({ url, onClose }: QRCodeDisplayProps) {
 
     return createPortal(
         <div
+            data-testid="qr-code-backdrop"
             className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200"
             onClick={onClose}
         >
@@ -62,6 +63,7 @@ export default function QRCodeDisplay({ url, onClose }: QRCodeDisplayProps) {
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
+                    data-testid="close-button"
                     onClick={onClose}
                     className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
                 >
