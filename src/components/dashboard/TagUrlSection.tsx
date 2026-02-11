@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { LuCopy, LuCheck, LuExternalLink } from 'react-icons/lu'
+import { LuCopy, LuCheck, LuExternalLink, LuQrCode } from 'react-icons/lu'
+import QRCodeDisplay from '@/components/common/QRCodeDisplay'
 
 interface TagUrlSectionProps {
     tagUrl: string
@@ -10,6 +11,7 @@ interface TagUrlSectionProps {
 
 export default function TagUrlSection({ tagUrl, tagCode }: TagUrlSectionProps) {
     const [copied, setCopied] = useState(false)
+    const [showQR, setShowQR] = useState(false)
 
     const handleCopy = async () => {
         await navigator.clipboard.writeText(tagUrl)
@@ -18,28 +20,41 @@ export default function TagUrlSection({ tagUrl, tagCode }: TagUrlSectionProps) {
     }
 
     return (
-        <div className="bg-white rounded-lg border-2 border-black px-4 py-2 shadow-[2px_2px_0_#000]">
-            <p className="text-black/40 text-xs mb-1">Tag URL</p>
-            <div className="flex items-center gap-2">
-                <p className="flex-1 font-mono text-black text-sm truncate">{tagUrl}</p>
-                <button
-                    onClick={handleCopy}
-                    className="px-3 py-1.5 bg-white text-black text-sm font-bold transition-colors flex items-center gap-1.5 border-2 border-black rounded-lg hover:bg-gray-50"
-                    style={{ boxShadow: '2px 2px 0 #000' }}
-                >
-                    {copied ? <><LuCheck className="text-green-600" /> Copied</> : <><LuCopy /> Copy</>}
-                </button>
-                <a
-                    href={tagUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-1.5 bg-[var(--golden)] text-black text-sm font-bold transition-colors inline-flex items-center gap-1.5 border-2 border-black rounded-lg hover:bg-[var(--golden-light)]"
-                    style={{ boxShadow: '2px 2px 0 #000' }}
-                >
-                    <LuExternalLink />
-                    Open
-                </a>
+        <>
+            <div className="bg-white rounded-lg border-2 border-black px-4 py-2 shadow-[2px_2px_0_#000]">
+                <p className="text-black/40 text-xs mb-1">Tag URL</p>
+                <div className="flex items-center gap-2">
+                    <p className="flex-1 font-mono text-black text-sm truncate">{tagUrl}</p>
+                    <button
+                        onClick={() => setShowQR(true)}
+                        className="px-3 py-1.5 bg-white text-black text-sm font-bold transition-colors flex items-center gap-1.5 border-2 border-black rounded-lg hover:bg-gray-50"
+                        style={{ boxShadow: '2px 2px 0 #000' }}
+                    >
+                        <LuQrCode /> Show QR
+                    </button>
+                    <button
+                        onClick={handleCopy}
+                        className="px-3 py-1.5 bg-white text-black text-sm font-bold transition-colors flex items-center gap-1.5 border-2 border-black rounded-lg hover:bg-gray-50"
+                        style={{ boxShadow: '2px 2px 0 #000' }}
+                    >
+                        {copied ? <><LuCheck className="text-green-600" /> Copied</> : <><LuCopy /> Copy</>}
+                    </button>
+                    <a
+                        href={tagUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-1.5 bg-[var(--golden)] text-black text-sm font-bold transition-colors inline-flex items-center gap-1.5 border-2 border-black rounded-lg hover:bg-[var(--golden-light)]"
+                        style={{ boxShadow: '2px 2px 0 #000' }}
+                    >
+                        <LuExternalLink />
+                        Open
+                    </a>
+                </div>
             </div>
-        </div>
+
+            {showQR && (
+                <QRCodeDisplay url={tagUrl} onClose={() => setShowQR(false)} />
+            )}
+        </>
     )
 }

@@ -1,15 +1,11 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import type { Tag } from '@/lib/types/database'
+import TagCard from '@/components/dashboard/TagCard'
 import {
-    LuBriefcase,
-    LuWifi,
-    LuLink,
-    LuHeart,
-    LuExternalLink,
-    LuTag,
     LuChartBar,
-    LuPlus
+    LuPlus,
+    LuTag
 } from 'react-icons/lu'
 
 export default async function DashboardPage() {
@@ -66,56 +62,6 @@ export default async function DashboardPage() {
                 </div>
             )}
         </div>
-    )
-}
-
-function TagCard({ tag, index }: { tag: Tag; index: number }) {
-    const modeIcons: Record<string, React.ReactNode> = {
-        business_card: <LuBriefcase />,
-        wifi: <LuWifi />,
-        link_hub: <LuLink />,
-        emergency: <LuHeart />,
-        redirect: <LuExternalLink />,
-    }
-
-    const modeNames: Record<string, string> = {
-        business_card: 'Business Card',
-        wifi: 'Wi-Fi',
-        link_hub: 'Link Hub',
-        emergency: 'Emergency',
-        redirect: 'Redirect',
-    }
-
-    // Alternate between golden and blue shadows
-    const shadowClass = index % 2 === 0 ? 'shadow-golden' : 'shadow-blue'
-    const iconBg = index % 2 === 0 ? 'bg-[var(--golden)]' : 'bg-[var(--blue)]'
-
-    return (
-        <Link
-            href={`/dashboard/tags/${tag.id}`}
-            className={`block p-5 ${shadowClass} card-hover`}
-        >
-            <div className="flex items-start justify-between mb-3">
-                <div className={`w-10 h-10 ${iconBg} rounded-lg border-2 border-black flex items-center justify-center text-lg text-black`}>
-                    {modeIcons[tag.active_mode] || <LuTag />}
-                </div>
-                <div className={`${tag.is_active ? 'badge-golden' : 'badge-blue'}`}>
-                    {tag.is_active ? 'Active' : 'Inactive'}
-                </div>
-            </div>
-
-            <h3 className="font-semibold text-black mb-1">
-                {tag.label || 'Untitled Tag'}
-            </h3>
-            <p className="text-black/60 text-sm mb-3">
-                {modeNames[tag.active_mode] || tag.active_mode}
-            </p>
-
-            <div className="flex items-center justify-between text-xs">
-                <span className="text-black/40 font-mono">{tag.code}</span>
-                <span className="text-black/40">{tag.tap_count} taps</span>
-            </div>
-        </Link>
     )
 }
 
