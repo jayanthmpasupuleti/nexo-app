@@ -11,6 +11,7 @@ A Next.js 14 application that transforms NFC tags into dynamic digital identity 
 - **🔗 Link Hub** - Linktree-style collection of links
 - **🏥 Emergency Info** - Medical information for first responders
 - **↗️ Redirect** - Simple URL redirect
+- **📱 Progressive Web App (PWA)** - Installable on iOS/Android for offline use
 - **🎨 Custom Styles** - Hand-drawn "sketchy" UI aesthetic
 - **📱 QR Code Fallback** - Native QR generation for non-NFC devices
 

@@ -9,8 +9,24 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Nexo - Your Digital Identity, One Tap Away",
-  description: "NFC-powered digital business cards, Wi-Fi sharing, and more. Create your personal tap-to-connect experience.",
+  title: "Nexo - NFC Keychain",
+  description: "Your digital identity, on a keychain. NFC-powered digital business cards, Wi-Fi sharing, and more.",
+  manifest: "/manifest.json",
+  icons: {
+    apple: "/apple-touch-icon.png",
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false, // Prevents zooming for a more native app feel
+  },
+  themeColor: "#f8f9fa",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Nexo",
+  },
 };
 
 export default function RootLayout({
